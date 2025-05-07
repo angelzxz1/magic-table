@@ -27,6 +27,7 @@ export const POST = async (req: NextRequest) => {
         if (!user) return new NextResponse("User not found", { status: 404 });
 
         // Check if password is correct
+        console.log("Login: ", password, " - ", user.password);
         const isMatch = await verifyPassword(password, user.password);
         if (!isMatch)
             return new NextResponse("Invalid credentials", { status: 401 });

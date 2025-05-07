@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Link from "next/link";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +18,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader, Save } from "lucide-react";
-import { User } from "@/lib/generated/prisma";
+import { UserWithoutPassword } from "@/store/features/user/userSlice";
 const formSchema = z.object({
     firstName: z.string().min(1, {
         message: "Email must be at least 1 characters.",
@@ -34,7 +33,7 @@ const formSchema = z.object({
         message: "Email must be at least 5 characters.",
     }),
 });
-export function UserUpdate({ user }: { user: User }) {
+export function UserUpdate({ user }: { user: UserWithoutPassword }) {
     // const { user } = useAppSelector((state) => state.user);
     // console.log(user);
     const { firstName, lastName, username, email } = user;
@@ -75,39 +74,29 @@ export function UserUpdate({ user }: { user: User }) {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="gap-8 flex flex-col h-full p-8"
+                className="gap-8 flex flex-col h-full p-8 justify-between"
             >
-                <div className="h-1/3 w-full flex flex-wrap gap-4 items-center justify-end">
-                    Enable Edit{" "}
-                    <Switch
-                        onCheckedChange={toggleEnable}
-                        checked={!enableForm}
-                    />
-                </div>
-                <div className="h-1/3 w-full flex flex-wrap gap-4 items-center justify-between">
+                <div className="w-full flex flex-wrap gap-4 items-center justify-between">
                     <FormField
                         control={form.control}
                         name="username"
-                        render={({ field }) => {
-                            console.log("Field: ", field);
-                            return (
-                                <FormItem>
-                                    <FormLabel className="flex justify-center">
-                                        Username
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            );
-                        }}
+                        render={({ field }) => (
+                            <FormItem className="w-full">
+                                <FormLabel className="flex justify-center">
+                                    Username
+                                </FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
                     />
                     <FormField
                         control={form.control}
                         name="email"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-full">
                                 <FormLabel className="flex justify-center">
                                     Email
                                 </FormLabel>
@@ -122,7 +111,7 @@ export function UserUpdate({ user }: { user: User }) {
                         control={form.control}
                         name="firstName"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-full">
                                 <FormLabel className="flex justify-center">
                                     First Name
                                 </FormLabel>
@@ -137,7 +126,7 @@ export function UserUpdate({ user }: { user: User }) {
                         control={form.control}
                         name="lastName"
                         render={({ field }) => (
-                            <FormItem>
+                            <FormItem className="w-full">
                                 <FormLabel className="flex justify-center">
                                     Last Name
                                 </FormLabel>
@@ -149,9 +138,20 @@ export function UserUpdate({ user }: { user: User }) {
                         )}
                     />
                 </div>
-                <div className="w-full h-1/3 flex flex-wrap items-center justify-between ">
-                    <div className="w-full flex justify-end-safe">
-                        <Button type="submit" disabled={enableForm}>
+                <div className="w-full flex flex-wrap items-center justify-between">
+                    <div className="flex flex-wrap gap-4 items-center justify-end">
+                        Enable Edit{" "}
+                        <Switch
+                            onCheckedChange={toggleEnable}
+                            checked={!enableForm}
+                        />
+                    </div>
+                    <div className="flex justify-end-safe ">
+                        <Button
+                            type="submit"
+                            disabled={enableForm}
+                            className="cursor-pointer"
+                        >
                             {loading ? (
                                 <Loader className="animate-spin" />
                             ) : (

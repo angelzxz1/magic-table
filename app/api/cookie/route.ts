@@ -33,8 +33,9 @@ export async function GET(req: Request) {
 
     if (session.userId !== userId)
         return new NextResponse("Invalid token", { status: 401 });
-    const user = await findUserById(userId);
-    if (!user) return new NextResponse("User not found", { status: 404 });
+    const userFound = await findUserById(userId);
+    if (!userFound) return new NextResponse("User not found", { status: 404 });
+    const { password, ...user } = userFound;
     return NextResponse.json({
         message: "Token is valid",
         session,

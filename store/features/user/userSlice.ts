@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "@/lib/generated/prisma";
 
+export type UserWithoutPassword = Omit<User, "password">;
+
 export const userSlice = createSlice({
     name: "user",
     initialState: {
-        user: null as User | null,
+        user: null as UserWithoutPassword | null,
         isLoggedIn: false,
     },
     reducers: {
@@ -21,7 +23,7 @@ export const userSlice = createSlice({
 
 export const { setUser, clearUser } = userSlice.actions;
 export type UserState = {
-    user: User | null;
+    user: UserWithoutPassword | null;
     isLoggedIn: boolean;
 };
 export default userSlice.reducer;
