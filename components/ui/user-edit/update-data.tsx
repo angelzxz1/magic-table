@@ -64,7 +64,7 @@ export function UserUpdate({ user }: { user: UserWithoutPassword }) {
             const { data } = res;
             dispatch(setUser(data.user));
             router.refresh();
-            toast.success("Password updated successfully");
+            toast.success("User information updated successfully");
         } catch (error) {
             console.log(error);
         }
