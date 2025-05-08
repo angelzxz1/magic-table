@@ -16,10 +16,11 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Loader, Save } from "lucide-react";
+import { Eye, EyeOff, Loader, Save } from "lucide-react";
 import { User } from "@/lib/generated/prisma";
 import { useAppDispatch } from "@/store/hooks";
 import { setUser, UserWithoutPassword } from "@/store/features/user/userSlice";
+import { cn } from "@/lib/utils";
 
 const formSchema = z
     .object({
@@ -52,6 +53,14 @@ const formSchema = z
 
 export function ChangePassword() {
     const [loading, setLoading] = useState(false);
+    const [cpwView, setCpwView] = useState(false);
+    const [npwView, setNpwView] = useState(false);
+    const [rpwView, setRpwView] = useState(false);
+
+    const [cpwFocused, setCpwFocused] = useState(false);
+    const [npwFocused, setNpwFocused] = useState(false);
+    const [rpwFocused, setRpwFocused] = useState(false);
+
     const router = useRouter();
     const dispatch = useAppDispatch();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -110,9 +119,33 @@ export function ChangePassword() {
                                 <FormLabel className="flex justify-center">
                                     Current Password
                                 </FormLabel>
-                                <FormControl>
-                                    <Input {...field} type="password" />
-                                </FormControl>
+                                <div
+                                    className={cn(
+                                        "rounded-md border w-full flex bg-transparent dark:bg-input/30 border-input shadow-xs transition-colors",
+                                        cpwFocused &&
+                                            "border-ring ring-ring/50 ring-[3px] bg-transparent dark:bg-input/30 shadow-xs transition-[color,box-shadow]"
+                                    )}
+                                >
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            variant="ghost"
+                                            type={cpwView ? "text" : "password"}
+                                            onFocus={() => setCpwFocused(true)}
+                                            onBlur={() => setCpwFocused(false)}
+                                        />
+                                    </FormControl>
+                                    <Button
+                                        type="button"
+                                        onClick={() => {
+                                            setCpwView(!cpwView);
+                                        }}
+                                        variant="ghost"
+                                    >
+                                        {cpwView ? <EyeOff /> : <Eye />}
+                                    </Button>
+                                </div>
+
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -125,9 +158,32 @@ export function ChangePassword() {
                                 <FormLabel className="flex justify-center">
                                     New Password
                                 </FormLabel>
-                                <FormControl>
-                                    <Input {...field} type="password" />
-                                </FormControl>
+                                <div
+                                    className={cn(
+                                        "rounded-md border w-full flex bg-transparent dark:bg-input/30 border-input shadow-xs transition-colors",
+                                        npwFocused &&
+                                            "border-ring ring-ring/50 ring-[3px] bg-transparent dark:bg-input/30 shadow-xs transition-[color,box-shadow]"
+                                    )}
+                                >
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            variant="ghost"
+                                            type={npwView ? "text" : "password"}
+                                            onFocus={() => setNpwFocused(true)}
+                                            onBlur={() => setNpwFocused(false)}
+                                        />
+                                    </FormControl>
+                                    <Button
+                                        type="button"
+                                        onClick={() => {
+                                            setNpwView(!npwView);
+                                        }}
+                                        variant="ghost"
+                                    >
+                                        {npwView ? <EyeOff /> : <Eye />}
+                                    </Button>
+                                </div>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -140,9 +196,32 @@ export function ChangePassword() {
                                 <FormLabel className="flex justify-center">
                                     Repeat Password
                                 </FormLabel>
-                                <FormControl>
-                                    <Input {...field} type="password" />
-                                </FormControl>
+                                <div
+                                    className={cn(
+                                        "rounded-md border w-full flex bg-transparent dark:bg-input/30 border-input shadow-xs transition-colors",
+                                        rpwFocused &&
+                                            "border-ring ring-ring/50 ring-[3px] bg-transparent dark:bg-input/30 shadow-xs transition-[color,box-shadow]"
+                                    )}
+                                >
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            type={rpwView ? "text" : "password"}
+                                            variant="ghost"
+                                            onFocus={() => setRpwFocused(true)}
+                                            onBlur={() => setRpwFocused(false)}
+                                        />
+                                    </FormControl>
+                                    <Button
+                                        type="button"
+                                        onClick={() => {
+                                            setRpwView(!rpwView);
+                                        }}
+                                        variant="ghost"
+                                    >
+                                        {rpwView ? <EyeOff /> : <Eye />}
+                                    </Button>
+                                </div>
                                 <FormMessage />
                             </FormItem>
                         )}
