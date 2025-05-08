@@ -50,7 +50,7 @@ const formSchema = z
         path: ["repeatPassword"],
     });
 
-export function ChangePassword({ user }: { user: UserWithoutPassword }) {
+export function ChangePassword() {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const dispatch = useAppDispatch();
@@ -67,12 +67,10 @@ export function ChangePassword({ user }: { user: UserWithoutPassword }) {
         setLoading(true);
         try {
             console.log(values);
-            const res = await axios.post<{ message: string; user: User }>(
-                "/api/user/change-password",
-                values
-            );
-            console.log(res);
-
+            const res = await axios.post<{
+                message: string;
+                user: UserWithoutPassword;
+            }>("/api/user/change-password", values);
             const { data } = res;
             dispatch(setUser(data.user));
             router.refresh();

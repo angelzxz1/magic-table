@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { verifySession } from "../../session-verify";
 import { hashPassword, verifyPassword } from "@/api-libs/services/user.service";
+import { UserWithoutPassword } from "@/store/features/user/userSlice";
 type jsonData = {
     firstName: string;
     lastName: string;
@@ -67,7 +68,10 @@ export const POST = async (req: NextRequest) => {
         const { password, ...userWithoutPassword } = updatedUser;
 
         return NextResponse.json(
-            { message: "User info updated", user: userWithoutPassword },
+            {
+                message: "User info updated",
+                user: userWithoutPassword as UserWithoutPassword,
+            },
             { status: 200 }
         );
     } catch (error) {

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
     Form,
     FormControl,
@@ -18,7 +19,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader, Save } from "lucide-react";
-import { UserWithoutPassword } from "@/store/features/user/userSlice";
+import { setUser, UserWithoutPassword } from "@/store/features/user/userSlice";
+import { useAppDispatch } from "@/store/hooks";
 const formSchema = z.object({
     firstName: z.string().min(1, {
         message: "Email must be at least 1 characters.",
@@ -34,10 +36,9 @@ const formSchema = z.object({
     }),
 });
 export function UserUpdate({ user }: { user: UserWithoutPassword }) {
-    // const { user } = useAppSelector((state) => state.user);
-    // console.log(user);
+    const dispatch = useAppDispatch();
     const { firstName, lastName, username, email } = user;
-    // const router = useRouter();
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [enableForm, setEnableForm] = useState(true);
     const form = useForm<z.infer<typeof formSchema>>({
@@ -56,14 +57,14 @@ export function UserUpdate({ user }: { user: UserWithoutPassword }) {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setLoading(true);
         try {
-            const res = await axios.post("/api/user/update", values);
-            if (res.status !== 200) return console.log("There was an error");
-            const data = await res.data;
-            if (data.error) {
-                console.log(data.error);
-                return;
-            }
-            console.log(data);
+            const res = await axios.post<{
+                message: string;
+                user: UserWithoutPassword;
+            }>("/api/user/update", values);
+            const { data } = res;
+            dispatch(setUser(data.user));
+            router.refresh();
+            toast.success("Password updated successfully");
         } catch (error) {
             console.log(error);
         }

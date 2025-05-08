@@ -22,7 +22,7 @@ export default function Page() {
                     <UserUpdate user={user} />
                 </div>
                 <div className="w-1/2 border-l px-12 h-full">
-                    <ChangePassword user={user} />
+                    <ChangePassword />
                 </div>
             </div>
         </div>
