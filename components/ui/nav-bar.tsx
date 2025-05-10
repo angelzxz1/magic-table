@@ -119,7 +119,7 @@ export const NavBar = () => {
                     top="top-12"
                     index={1}
                     text="Decks"
-                    href="/decks"
+                    href={`/${user?.username}/decks`}
                 >
                     <PackageOpen />
                 </Circle>
