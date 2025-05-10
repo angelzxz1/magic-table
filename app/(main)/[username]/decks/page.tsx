@@ -1,5 +1,7 @@
+"use client";
+
 const Decks = () => {
-    return <div>Decks page</div>;
+    return <div className="w-full">Decks page</div>;
 };
 
 export default Decks;
