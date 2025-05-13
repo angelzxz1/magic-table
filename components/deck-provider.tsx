@@ -18,7 +18,7 @@ export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
                 console.log(data);
                 setDeckFetched(true);
             } catch (e) {
-                console.log("Error pai");
+                console.log("Error pai: ", e);
             }
 
             // if (res.status !== 200) {
