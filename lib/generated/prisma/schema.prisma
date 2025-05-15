@@ -39,7 +39,7 @@ model Session {
 
 model Card {
   id         String     @id @default(cuid())
-  scryfallId String
+  scryfallId String     @unique
   name       String
   manaCost   String?
   typeLine   String?

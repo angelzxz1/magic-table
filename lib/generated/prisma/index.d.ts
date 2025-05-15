@@ -7186,10 +7186,10 @@ export namespace Prisma {
 
   export type CardWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    scryfallId?: string
     AND?: CardWhereInput | CardWhereInput[]
     OR?: CardWhereInput[]
     NOT?: CardWhereInput | CardWhereInput[]
-    scryfallId?: StringFilter<"Card"> | string
     name?: StringFilter<"Card"> | string
     manaCost?: StringNullableFilter<"Card"> | string | null
     typeLine?: StringNullableFilter<"Card"> | string | null
@@ -7197,7 +7197,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
-  }, "id">
+  }, "id" | "scryfallId">
 
   export type CardOrderByWithAggregationInput = {
     id?: SortOrder
