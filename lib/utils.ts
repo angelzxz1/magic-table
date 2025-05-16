@@ -62,7 +62,6 @@ export async function fetchCardData(cards: Card[]) {
 
     for (const card of cards) {
         const cardInDB = await findCard(card.name);
-        console.log("La carta es: ", cardInDB);
         if (!cardInDB) {
             const encodedName = replaceSpacesWithPlus(card.name);
             const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${card.set}`;
@@ -105,13 +104,17 @@ export async function fetchCardData(cards: Card[]) {
 
 const findCard = async (name: string) => {
     try {
-        const card = await axios.get("/api/cards", {
+        const res = await axios.get<{ cards: Card[] }>("/api/cards", {
             params: {
                 name,
             },
         });
-
-        return card;
+        const { data } = res;
+        if (!data) return null;
+        const { cards } = data;
+        if (!cards) return null;
+        if (cards.length === 0) return null;
+        return cards;
     } catch (e) {
         console.log("Error finding card in DB");
         return null;

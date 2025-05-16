@@ -26,7 +26,6 @@ export const GET = async (req: NextRequest) => {
             },
         });
         return NextResponse.json({
-            Message: "Hola",
             cards,
         });
     } catch (error) {
@@ -37,7 +36,6 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
     try {
-        console.log("ABER");
         const { imgUrl, name, scryfallId, manaCost } =
             (await req.json()) as jsonData;
         if (!imgUrl)
@@ -45,24 +43,22 @@ export const POST = async (req: NextRequest) => {
         if (!name) return new NextResponse("name is required", { status: 400 });
         if (!scryfallId)
             return new NextResponse("scryfallId is required", { status: 400 });
-        if (!manaCost)
-            return new NextResponse("manaCost is required", { status: 400 });
-        console.log("Todo firme mani");
-        // const existingCard = await db.card.findUnique({
-        //     where: {
-        //         scryfallId,
-        //     },
-        // });
 
-        // if (existingCard)
-        //     return new NextResponse("Card already existing", { status: 400 });
+        const existingCard = await db.card.findUnique({
+            where: {
+                scryfallId,
+            },
+        });
+
+        if (existingCard)
+            return new NextResponse("Card already existing", { status: 400 });
 
         const card = await db.card.create({
             data: {
                 imgUrl,
                 name,
                 scryfallId,
-                manaCost,
+                manaCost: manaCost ? manaCost : "",
             },
         });
 
