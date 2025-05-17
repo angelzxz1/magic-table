@@ -19,7 +19,7 @@ export async function GET(req: Request) {
         const { userId } = session;
         if (!userId)
             return new NextResponse("Username is required", { status: 400 });
-        const decks = db.deck.findMany({
+        const decks = await db.deck.findMany({
             where: {
                 userId,
             },
