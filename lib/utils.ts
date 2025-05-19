@@ -57,6 +57,10 @@ export function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+type DecksResponse = {
+    message: string;
+    card: Card;
+};
 export async function fetchCardData(cards: Card[]) {
     const results = [];
 
@@ -77,8 +81,8 @@ export async function fetchCardData(cards: Card[]) {
                     scryfallId: id,
                     manaCost: mana_cost,
                 });
-                console.log(addedCardRes.data);
-                results.push(addedCardRes.data);
+                const { card }: DecksResponse = addedCardRes.data;
+                results.push(card);
             } catch (error) {
                 console.error(
                     `Error al obtener ${card.name} (${card.set})`,
@@ -94,7 +98,6 @@ export async function fetchCardData(cards: Card[]) {
             // Esperar 100 ms antes de continuar
             await sleep(100);
         } else {
-            console.log("entra al true");
             results.push(cardInDB);
         }
     }
