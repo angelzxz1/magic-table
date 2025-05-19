@@ -1,35 +1,37 @@
 "use client";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { add } from "@/store/features/decks/decksSlice";
+import { Deck } from "@/lib/generated/prisma";
+
+type DecksResponse = {
+    message: string;
+    decks: Deck[];
+};
 export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
     // const [isSession, setIsSession] = useState<boolean>(false);
     const [deckFetched, setDeckFetched] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const { deckList } = useAppSelector((state) => state.decks);
-    const { user } = useAppSelector((state) => state.user);
+    // const { refresh } = useRouter();
+    // const { deckList } = useAppSelector((state) => state.decks);
+    // const { user } = useAppSelector((state) => state.user);
     useEffect(() => {
         async function getDeckList() {
             try {
                 const res = await fetch("/api/decks");
-                const data = await res.json();
+
+                if (!res.ok) {
+                    redirect("/login");
+                }
+                const data: DecksResponse = await res.json();
                 console.log(data);
+                data.decks.forEach((deck) => dispatch(add(deck)));
                 setDeckFetched(true);
             } catch (e) {
                 console.log("Error pai: ", e);
             }
-
-            // if (res.status !== 200) {
-            //     // console.log("Access denied, redirecting to login");
-            //     redirect("/login");|
-            // } else {
-            //     const data = await res.json();
-            //     dispatch(setSession(data.session));
-            //     dispatch(setUser(data.user));
-            //     // setIsSession(true);
-            // }
         }
         getDeckList();
     }, []);

@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { verifySession } from "../session-verify";
+import { Deck } from "@/lib/generated/prisma";
 
 type jsonData = {
     userId: string;
@@ -19,7 +20,7 @@ export async function GET(req: Request) {
         const { userId } = session;
         if (!userId)
             return new NextResponse("Username is required", { status: 400 });
-        const decks = await db.deck.findMany({
+        const decks: Deck[] = await db.deck.findMany({
             where: {
                 userId,
             },
