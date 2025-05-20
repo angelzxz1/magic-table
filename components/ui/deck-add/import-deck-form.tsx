@@ -36,6 +36,7 @@ export function DeckForm() {
         isFetching(true);
         const decklist = parseDeckList(values.deckList);
         const res = await fetchCardData(decklist);
+        console.log(res);
         form.reset();
         isFetching(false);
     }

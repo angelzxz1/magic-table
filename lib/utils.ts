@@ -37,6 +37,14 @@ export type Card = {
 export const parseDeckList = (input: string): Card[] => {
     return input
         .split("\n") // separa por líneas
+        .map((item) => {
+            const set = item.slice(-5);
+            const faces = item.split("//");
+            if (faces.length === 1) return faces[0];
+            const joined = faces[0] + set;
+            console.log(joined);
+            return joined;
+        })
         .map((line) => line.trim()) // elimina espacios innecesarios
         .filter((line) => line.length > 0) // omite líneas vacías
         .map((line) => {
@@ -117,7 +125,7 @@ const findCard = async (name: string) => {
         const { cards } = data;
         if (!cards) return null;
         if (cards.length === 0) return null;
-        return cards;
+        return cards[0];
     } catch (e) {
         console.log("Error finding card in DB");
         return null;
