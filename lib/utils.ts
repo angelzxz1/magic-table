@@ -35,30 +35,32 @@ export type Card = {
     set: string;
 };
 export const parseDeckList = (input: string): Card[] => {
-    return input
-        .split("\n") // separa por líneas
-        .map((item) => {
-            const set = item.slice(-5);
-            const faces = item.split("//");
-            if (faces.length === 1) return faces[0];
-            const joined = faces[0] + set;
-            console.log(joined);
-            return joined;
-        })
-        .map((line) => line.trim()) // elimina espacios innecesarios
-        .filter((line) => line.length > 0) // omite líneas vacías
-        .map((line) => {
-            const match = line.match(/^(\d+)\s+(.+)\s+\((\w+)\)$/);
-            if (!match) {
-                throw new Error(`Línea inválida: "${line}"`);
-            }
-            const [, quantity, name, set] = match;
-            return {
-                quantity: parseInt(quantity),
-                name,
-                set,
-            };
-        });
+    return (
+        input
+            .split("\n") // separa por líneas
+            // .map((item) => {
+            //     const set = item.slice(-5);
+            //     const faces = item.split("//");
+            //     if (faces.length === 1) return faces[0];
+            //     const joined = faces[0] + set;
+            //     console.log(joined);
+            //     return joined;
+            // })
+            .map((line) => line.trim()) // elimina espacios innecesarios
+            .filter((line) => line.length > 0) // omite líneas vacías
+            .map((line) => {
+                const match = line.match(/^(\d+)\s+(.+)\s+\((\w+)\)$/);
+                if (!match) {
+                    throw new Error(`Línea inválida: "${line}"`);
+                }
+                const [, quantity, name, set] = match;
+                return {
+                    quantity: parseInt(quantity),
+                    name,
+                    set,
+                };
+            })
+    );
 };
 
 export function sleep(ms: number): Promise<void> {
@@ -76,6 +78,7 @@ export async function fetchCardData(cards: Card[]) {
         const cardInDB = await findCard(card.name);
         if (!cardInDB) {
             const encodedName = replaceSpacesWithPlus(card.name);
+            console.log(encodedName);
             const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${card.set}`;
 
             try {
