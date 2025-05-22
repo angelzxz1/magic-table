@@ -35,32 +35,22 @@ export type Card = {
     set: string;
 };
 export const parseDeckList = (input: string): Card[] => {
-    return (
-        input
-            .split("\n") // separa por líneas
-            // .map((item) => {
-            //     const set = item.slice(-5);
-            //     const faces = item.split("//");
-            //     if (faces.length === 1) return faces[0];
-            //     const joined = faces[0] + set;
-            //     console.log(joined);
-            //     return joined;
-            // })
-            .map((line) => line.trim()) // elimina espacios innecesarios
-            .filter((line) => line.length > 0) // omite líneas vacías
-            .map((line) => {
-                const match = line.match(/^(\d+)\s+(.+)\s+\((\w+)\)$/);
-                if (!match) {
-                    throw new Error(`Línea inválida: "${line}"`);
-                }
-                const [, quantity, name, set] = match;
-                return {
-                    quantity: parseInt(quantity),
-                    name,
-                    set,
-                };
-            })
-    );
+    return input
+        .split("\n")
+        .map((line) => line.trim()) // elimina espacios innecesarios
+        .filter((line) => line.length > 0) // omite líneas vacías
+        .map((line) => {
+            const match = line.match(/^(\d+)\s+(.+)\s+\((\w+)\)$/);
+            if (!match) {
+                throw new Error(`Línea inválida: "${line}"`);
+            }
+            const [, quantity, name, set] = match;
+            return {
+                quantity: parseInt(quantity),
+                name,
+                set,
+            };
+        });
 };
 
 export function sleep(ms: number): Promise<void> {
@@ -83,17 +73,36 @@ export async function fetchCardData(cards: Card[]) {
 
             try {
                 const response = await axios.get(url);
-                const { mana_cost, image_uris, name, id } =
-                    response.data as DataNeded;
-                const { large } = image_uris;
-                const addedCardRes = await axios.post("/api/cards", {
-                    imgUrl: large,
-                    name,
-                    scryfallId: id,
-                    manaCost: mana_cost,
-                });
-                const { card }: DecksResponse = addedCardRes.data;
-                results.push(card);
+                const { mana_cost, image_uris, name, id, card_faces } =
+                    response.data;
+                if (!card_faces) {
+                    const { large } = image_uris;
+                    const addedCardRes = await axios.post("/api/cards", {
+                        imgUrl: large,
+                        name,
+                        scryfallId: id,
+                        manaCost: mana_cost,
+                    });
+                    const { card }: DecksResponse = addedCardRes.data;
+                    results.push(card);
+                } else {
+                    const [face1, face2] = card_faces;
+                    const { image_uris: f1_Uris, manaCost: mc1 } = face1;
+                    const { image_uris: f2_Uris, manaCost: mc2 } = face2;
+                    const { large: f1_large } = f1_Uris;
+                    const { large: f2_large } = f2_Uris;
+                    const addedCardRes = await axios.post("/api/cards", {
+                        imgUrl: f1_large,
+                        secondUrl: f2_large,
+                        name,
+                        scryfallId: id,
+                        manaCost: mc1,
+                        secondManaCost: mc2,
+                    });
+                    const { card: CardToList }: DecksResponse =
+                        addedCardRes.data;
+                    results.push(CardToList);
+                }
             } catch (error) {
                 console.error(
                     `Error al obtener ${card.name} (${card.set})`,
@@ -116,6 +125,26 @@ export async function fetchCardData(cards: Card[]) {
     return results;
 }
 
+const createDeck = async ({
+    DeckList,
+    userId,
+    commander,
+    deckName,
+}: {
+    DeckList: Card[];
+    userId: string;
+    commander: String;
+    deckName: String;
+}) => {
+    try {
+        const deckRes = await axios.post("/api/decks/deck", {
+            userId,
+            commander,
+            deckName,
+        });
+        DeckList.forEach((card) => {});
+    } catch (error) {}
+};
 const findCard = async (name: string) => {
     try {
         const res = await axios.get<{ cards: Card[] }>("/api/cards", {

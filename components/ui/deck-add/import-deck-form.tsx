@@ -19,7 +19,9 @@ import { useState } from "react";
 import { Import, Loader } from "lucide-react";
 
 const formSchema = z.object({
+    deckName: z.string().min(5),
     deckList: z.string().min(2),
+    commander: z.string().min(2),
 });
 
 export function DeckForm() {
@@ -28,6 +30,8 @@ export function DeckForm() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             deckList: "",
+            commander: "",
+            deckName: "",
         },
     });
 
@@ -44,8 +48,40 @@ export function DeckForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 w-full flex flex-wrap"
+                className="space-y-4 w-full flex flex-wrap"
             >
+                <FormField
+                    control={form.control}
+                    name="deckName"
+                    render={({ field }) => (
+                        <FormItem className="w-full">
+                            <FormControl>
+                                <Input
+                                    className="w-full"
+                                    {...field}
+                                    placeholder="Deck Name"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="commander"
+                    render={({ field }) => (
+                        <FormItem className="w-full">
+                            <FormControl>
+                                <Input
+                                    className="w-full"
+                                    {...field}
+                                    placeholder="Commander"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="deckList"

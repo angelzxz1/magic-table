@@ -12,7 +12,9 @@ type jsonData = {
     imgUrl: string;
     name: string;
     scryfallId: string;
+    secondUrl: string;
     manaCost: string;
+    secondManaCost: string;
 };
 
 export const GET = async (req: NextRequest) => {
@@ -36,8 +38,14 @@ export const GET = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
     try {
-        const { imgUrl, name, scryfallId, manaCost } =
-            (await req.json()) as jsonData;
+        const {
+            imgUrl,
+            name,
+            scryfallId,
+            manaCost,
+            secondManaCost,
+            secondUrl,
+        } = (await req.json()) as jsonData;
         if (!imgUrl)
             return new NextResponse("imgUrl is required", { status: 400 });
         if (!name) return new NextResponse("name is required", { status: 400 });
@@ -56,9 +64,11 @@ export const POST = async (req: NextRequest) => {
         const card = await db.card.create({
             data: {
                 imgUrl,
+                secondUrl: secondUrl ? secondUrl : "",
                 name,
                 scryfallId,
                 manaCost: manaCost ? manaCost : "",
+                secondManaCost: secondManaCost ? secondManaCost : "",
             },
         });
 

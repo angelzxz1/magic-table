@@ -3559,6 +3559,8 @@ export namespace Prisma {
     manaCost: string | null
     typeLine: string | null
     imgUrl: string | null
+    secondUrl: string | null
+    secondManaCost: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3570,6 +3572,8 @@ export namespace Prisma {
     manaCost: string | null
     typeLine: string | null
     imgUrl: string | null
+    secondUrl: string | null
+    secondManaCost: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3581,6 +3585,8 @@ export namespace Prisma {
     manaCost: number
     typeLine: number
     imgUrl: number
+    secondUrl: number
+    secondManaCost: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3594,6 +3600,8 @@ export namespace Prisma {
     manaCost?: true
     typeLine?: true
     imgUrl?: true
+    secondUrl?: true
+    secondManaCost?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3605,6 +3613,8 @@ export namespace Prisma {
     manaCost?: true
     typeLine?: true
     imgUrl?: true
+    secondUrl?: true
+    secondManaCost?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3616,6 +3626,8 @@ export namespace Prisma {
     manaCost?: true
     typeLine?: true
     imgUrl?: true
+    secondUrl?: true
+    secondManaCost?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3700,6 +3712,8 @@ export namespace Prisma {
     manaCost: string | null
     typeLine: string | null
     imgUrl: string
+    secondUrl: string | null
+    secondManaCost: string | null
     createdAt: Date
     updatedAt: Date
     _count: CardCountAggregateOutputType | null
@@ -3728,6 +3742,8 @@ export namespace Prisma {
     manaCost?: boolean
     typeLine?: boolean
     imgUrl?: boolean
+    secondUrl?: boolean
+    secondManaCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     decks?: boolean | Card$decksArgs<ExtArgs>
@@ -3741,6 +3757,8 @@ export namespace Prisma {
     manaCost?: boolean
     typeLine?: boolean
     imgUrl?: boolean
+    secondUrl?: boolean
+    secondManaCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3752,6 +3770,8 @@ export namespace Prisma {
     manaCost?: boolean
     typeLine?: boolean
     imgUrl?: boolean
+    secondUrl?: boolean
+    secondManaCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3763,11 +3783,13 @@ export namespace Prisma {
     manaCost?: boolean
     typeLine?: boolean
     imgUrl?: boolean
+    secondUrl?: boolean
+    secondManaCost?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
+  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
   export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | Card$decksArgs<ExtArgs>
     _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
@@ -3787,6 +3809,8 @@ export namespace Prisma {
       manaCost: string | null
       typeLine: string | null
       imgUrl: string
+      secondUrl: string | null
+      secondManaCost: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["card"]>
@@ -4219,6 +4243,8 @@ export namespace Prisma {
     readonly manaCost: FieldRef<"Card", 'String'>
     readonly typeLine: FieldRef<"Card", 'String'>
     readonly imgUrl: FieldRef<"Card", 'String'>
+    readonly secondUrl: FieldRef<"Card", 'String'>
+    readonly secondManaCost: FieldRef<"Card", 'String'>
     readonly createdAt: FieldRef<"Card", 'DateTime'>
     readonly updatedAt: FieldRef<"Card", 'DateTime'>
   }
@@ -4665,7 +4691,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
-    format: string | null
+    commander: string | null
     isPublic: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4675,7 +4701,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
-    format: string | null
+    commander: string | null
     isPublic: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4685,7 +4711,7 @@ export namespace Prisma {
     id: number
     name: number
     userId: number
-    format: number
+    commander: number
     isPublic: number
     createdAt: number
     updatedAt: number
@@ -4697,7 +4723,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    format?: true
+    commander?: true
     isPublic?: true
     createdAt?: true
     updatedAt?: true
@@ -4707,7 +4733,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    format?: true
+    commander?: true
     isPublic?: true
     createdAt?: true
     updatedAt?: true
@@ -4717,7 +4743,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    format?: true
+    commander?: true
     isPublic?: true
     createdAt?: true
     updatedAt?: true
@@ -4800,7 +4826,7 @@ export namespace Prisma {
     id: string
     name: string
     userId: string
-    format: string
+    commander: string
     isPublic: boolean
     createdAt: Date
     updatedAt: Date
@@ -4827,7 +4853,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    format?: boolean
+    commander?: boolean
     isPublic?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4840,7 +4866,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    format?: boolean
+    commander?: boolean
     isPublic?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4851,7 +4877,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    format?: boolean
+    commander?: boolean
     isPublic?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4862,13 +4888,13 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    format?: boolean
+    commander?: boolean
     isPublic?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DeckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "format" | "isPublic" | "createdAt" | "updatedAt", ExtArgs["result"]["deck"]>
+  export type DeckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "commander" | "isPublic" | "createdAt" | "updatedAt", ExtArgs["result"]["deck"]>
   export type DeckInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     cards?: boolean | Deck$cardsArgs<ExtArgs>
@@ -4891,7 +4917,7 @@ export namespace Prisma {
       id: string
       name: string
       userId: string
-      format: string
+      commander: string
       isPublic: boolean
       createdAt: Date
       updatedAt: Date
@@ -5323,7 +5349,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Deck", 'String'>
     readonly name: FieldRef<"Deck", 'String'>
     readonly userId: FieldRef<"Deck", 'String'>
-    readonly format: FieldRef<"Deck", 'String'>
+    readonly commander: FieldRef<"Deck", 'String'>
     readonly isPublic: FieldRef<"Deck", 'Boolean'>
     readonly createdAt: FieldRef<"Deck", 'DateTime'>
     readonly updatedAt: FieldRef<"Deck", 'DateTime'>
@@ -6899,6 +6925,8 @@ export namespace Prisma {
     manaCost: 'manaCost',
     typeLine: 'typeLine',
     imgUrl: 'imgUrl',
+    secondUrl: 'secondUrl',
+    secondManaCost: 'secondManaCost',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6910,7 +6938,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     userId: 'userId',
-    format: 'format',
+    commander: 'commander',
     isPublic: 'isPublic',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -7167,6 +7195,8 @@ export namespace Prisma {
     manaCost?: StringNullableFilter<"Card"> | string | null
     typeLine?: StringNullableFilter<"Card"> | string | null
     imgUrl?: StringFilter<"Card"> | string
+    secondUrl?: StringNullableFilter<"Card"> | string | null
+    secondManaCost?: StringNullableFilter<"Card"> | string | null
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
@@ -7179,6 +7209,8 @@ export namespace Prisma {
     manaCost?: SortOrderInput | SortOrder
     typeLine?: SortOrderInput | SortOrder
     imgUrl?: SortOrder
+    secondUrl?: SortOrderInput | SortOrder
+    secondManaCost?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     decks?: DeckCardOrderByRelationAggregateInput
@@ -7194,6 +7226,8 @@ export namespace Prisma {
     manaCost?: StringNullableFilter<"Card"> | string | null
     typeLine?: StringNullableFilter<"Card"> | string | null
     imgUrl?: StringFilter<"Card"> | string
+    secondUrl?: StringNullableFilter<"Card"> | string | null
+    secondManaCost?: StringNullableFilter<"Card"> | string | null
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
@@ -7206,6 +7240,8 @@ export namespace Prisma {
     manaCost?: SortOrderInput | SortOrder
     typeLine?: SortOrderInput | SortOrder
     imgUrl?: SortOrder
+    secondUrl?: SortOrderInput | SortOrder
+    secondManaCost?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CardCountOrderByAggregateInput
@@ -7223,6 +7259,8 @@ export namespace Prisma {
     manaCost?: StringNullableWithAggregatesFilter<"Card"> | string | null
     typeLine?: StringNullableWithAggregatesFilter<"Card"> | string | null
     imgUrl?: StringWithAggregatesFilter<"Card"> | string
+    secondUrl?: StringNullableWithAggregatesFilter<"Card"> | string | null
+    secondManaCost?: StringNullableWithAggregatesFilter<"Card"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
   }
@@ -7234,7 +7272,7 @@ export namespace Prisma {
     id?: StringFilter<"Deck"> | string
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    format?: StringFilter<"Deck"> | string
+    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
@@ -7246,7 +7284,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    format?: SortOrder
+    commander?: SortOrder
     isPublic?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7261,7 +7299,7 @@ export namespace Prisma {
     NOT?: DeckWhereInput | DeckWhereInput[]
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    format?: StringFilter<"Deck"> | string
+    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
@@ -7273,7 +7311,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    format?: SortOrder
+    commander?: SortOrder
     isPublic?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7289,7 +7327,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Deck"> | string
     name?: StringWithAggregatesFilter<"Deck"> | string
     userId?: StringWithAggregatesFilter<"Deck"> | string
-    format?: StringWithAggregatesFilter<"Deck"> | string
+    commander?: StringWithAggregatesFilter<"Deck"> | string
     isPublic?: BoolWithAggregatesFilter<"Deck"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Deck"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Deck"> | Date | string
@@ -7504,6 +7542,8 @@ export namespace Prisma {
     manaCost?: string | null
     typeLine?: string | null
     imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardCreateNestedManyWithoutCardInput
@@ -7516,6 +7556,8 @@ export namespace Prisma {
     manaCost?: string | null
     typeLine?: string | null
     imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
@@ -7528,6 +7570,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUpdateManyWithoutCardNestedInput
@@ -7540,6 +7584,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
@@ -7552,6 +7598,8 @@ export namespace Prisma {
     manaCost?: string | null
     typeLine?: string | null
     imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7563,6 +7611,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7574,6 +7624,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7581,7 +7633,7 @@ export namespace Prisma {
   export type DeckCreateInput = {
     id?: string
     name: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7593,7 +7645,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7603,7 +7655,7 @@ export namespace Prisma {
   export type DeckUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7615,7 +7667,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7626,7 +7678,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7635,7 +7687,7 @@ export namespace Prisma {
   export type DeckUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7645,7 +7697,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7878,6 +7930,8 @@ export namespace Prisma {
     manaCost?: SortOrder
     typeLine?: SortOrder
     imgUrl?: SortOrder
+    secondUrl?: SortOrder
+    secondManaCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7889,6 +7943,8 @@ export namespace Prisma {
     manaCost?: SortOrder
     typeLine?: SortOrder
     imgUrl?: SortOrder
+    secondUrl?: SortOrder
+    secondManaCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7900,6 +7956,8 @@ export namespace Prisma {
     manaCost?: SortOrder
     typeLine?: SortOrder
     imgUrl?: SortOrder
+    secondUrl?: SortOrder
+    secondManaCost?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7931,7 +7989,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    format?: SortOrder
+    commander?: SortOrder
     isPublic?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7941,7 +7999,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    format?: SortOrder
+    commander?: SortOrder
     isPublic?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7951,7 +8009,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    format?: SortOrder
+    commander?: SortOrder
     isPublic?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8431,7 +8489,7 @@ export namespace Prisma {
   export type DeckCreateWithoutUserInput = {
     id?: string
     name: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8441,7 +8499,7 @@ export namespace Prisma {
   export type DeckUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8503,7 +8561,7 @@ export namespace Prisma {
     id?: StringFilter<"Deck"> | string
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    format?: StringFilter<"Deck"> | string
+    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
@@ -8768,7 +8826,7 @@ export namespace Prisma {
   export type DeckCreateWithoutCardsInput = {
     id?: string
     name: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8779,7 +8837,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8797,6 +8855,8 @@ export namespace Prisma {
     manaCost?: string | null
     typeLine?: string | null
     imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8808,6 +8868,8 @@ export namespace Prisma {
     manaCost?: string | null
     typeLine?: string | null
     imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8831,7 +8893,7 @@ export namespace Prisma {
   export type DeckUpdateWithoutCardsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8842,7 +8904,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8866,6 +8928,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8877,6 +8941,8 @@ export namespace Prisma {
     manaCost?: NullableStringFieldUpdateOperationsInput | string | null
     typeLine?: NullableStringFieldUpdateOperationsInput | string | null
     imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8884,7 +8950,7 @@ export namespace Prisma {
   export type DeckCreateManyUserInput = {
     id?: string
     name: string
-    format: string
+    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8899,7 +8965,7 @@ export namespace Prisma {
   export type DeckUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8909,7 +8975,7 @@ export namespace Prisma {
   export type DeckUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8919,7 +8985,7 @@ export namespace Prisma {
   export type DeckUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    format?: StringFieldUpdateOperationsInput | string
+    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

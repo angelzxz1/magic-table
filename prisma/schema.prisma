@@ -38,22 +38,24 @@ model Session {
 }
 
 model Card {
-  id         String     @id @default(cuid())
-  scryfallId String     @unique
-  name       String
-  manaCost   String?
-  typeLine   String?
-  imgUrl     String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  decks      DeckCard[]
+  id             String     @id @default(cuid())
+  scryfallId     String     @unique
+  name           String
+  manaCost       String?
+  typeLine       String?
+  imgUrl         String
+  secondUrl      String?
+  secondManaCost String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  decks          DeckCard[]
 }
 
 model Deck {
   id        String     @id @default(cuid())
   name      String
   userId    String
-  format    String
+  commander String
   isPublic  Boolean    @default(false)
   user      User       @relation(fields: [userId], references: [id])
   cards     DeckCard[]
