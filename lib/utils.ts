@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
-import { db } from "./db";
+import type { Card as CardDB, Deck } from "./generated/prisma";
 
 type DataNeded = {
     color_identity: string[];
@@ -59,11 +59,22 @@ export function sleep(ms: number): Promise<void> {
 
 type DecksResponse = {
     message: string;
-    card: Card;
+    card: CardDB;
 };
-export async function fetchCardData(cards: Card[]) {
-    const results = [];
-
+type notFoundType = {
+    quantity: number;
+    name: string;
+    set: string;
+    error: boolean;
+    data: null;
+};
+type fetchCardDataType = {
+    results: CardDB[];
+    notFound: notFoundType[];
+};
+export async function fetchCardData(cards: Card[]): Promise<fetchCardDataType> {
+    const results: CardDB[] = [];
+    const notFound: notFoundType[] = [];
     for (const card of cards) {
         const cardInDB = await findCard(card.name);
         if (!cardInDB) {
@@ -108,7 +119,7 @@ export async function fetchCardData(cards: Card[]) {
                     `Error al obtener ${card.name} (${card.set})`,
                     error
                 );
-                results.push({
+                notFound.push({
                     ...card,
                     error: true,
                     data: null,
@@ -122,32 +133,40 @@ export async function fetchCardData(cards: Card[]) {
         }
     }
 
-    return results;
+    return { results, notFound };
 }
 
-const createDeck = async ({
+export const createDeck = async ({
     DeckList,
     userId,
     commander,
     deckName,
 }: {
-    DeckList: Card[];
+    DeckList: CardDB[];
     userId: string;
     commander: String;
     deckName: String;
 }) => {
     try {
-        const deckRes = await axios.post("/api/decks/deck", {
-            userId,
-            commander,
-            deckName,
-        });
+        const deckRes = await axios.post<{ message: string; deck: Deck }>(
+            "/api/decks/deck",
+            {
+                userId,
+                commander,
+                deckName,
+                DeckList,
+            }
+        );
+        const { data } = deckRes;
+        console.log(data);
         DeckList.forEach((card) => {});
-    } catch (error) {}
+    } catch (error) {
+        console.log("Error Creating Deck: ", error);
+    }
 };
-const findCard = async (name: string) => {
+const findCard = async (name: string): Promise<CardDB | null> => {
     try {
-        const res = await axios.get<{ cards: Card[] }>("/api/cards", {
+        const res = await axios.get<{ cards: CardDB[] }>("/api/cards", {
             params: {
                 name,
             },

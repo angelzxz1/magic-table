@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { fetchCardData, parseDeckList } from "@/lib/utils";
+import { createDeck, fetchCardData, parseDeckList } from "@/lib/utils";
 import { useState } from "react";
 import { Import, Loader } from "lucide-react";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { UserWithoutPassword } from "@/store/features/user/userSlice";
 
 const formSchema = z.object({
     deckName: z.string().min(5),
@@ -25,6 +27,9 @@ const formSchema = z.object({
 });
 
 export function DeckForm() {
+    const user = useAppSelector(
+        (state) => state.user.user
+    ) as UserWithoutPassword;
     const [fetching, isFetching] = useState<boolean>(false);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -37,12 +42,30 @@ export function DeckForm() {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        isFetching(true);
-        const decklist = parseDeckList(values.deckList);
-        const res = await fetchCardData(decklist);
-        console.log(res);
-        form.reset();
-        isFetching(false);
+        try {
+            isFetching(true);
+            const { commander, deckName } = values;
+            const decklist = parseDeckList(values.deckList);
+            const { notFound, results } = await fetchCardData(decklist);
+            // const res = await createDeck({
+            //     commander,
+            //     DeckList: results,
+            //     deckName,
+            //     userId: user.id,
+            // });
+
+            // console.log(res);
+            form.reset();
+            if (notFound.length > 0) {
+                let strNotFound = "";
+                notFound.forEach((item) => (strNotFound += `${item.name}\n`));
+                form.setValue("deckList", strNotFound);
+            }
+            isFetching(false);
+        } catch (error) {
+            console.log("Error on the submit", error);
+            isFetching(false);
+        }
     }
     return (
         <Form {...form}>
