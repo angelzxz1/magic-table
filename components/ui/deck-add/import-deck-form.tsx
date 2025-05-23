@@ -57,8 +57,9 @@ export function DeckForm() {
             // console.log(res);
             form.reset();
             if (notFound.length > 0) {
-                let strNotFound = "";
+                let strNotFound = "---This cards weren't found---\n";
                 notFound.forEach((item) => (strNotFound += `${item.name}\n`));
+                strNotFound += "---The list below";
                 form.setValue("deckList", strNotFound);
             }
             isFetching(false);
