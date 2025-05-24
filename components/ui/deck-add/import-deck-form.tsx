@@ -55,11 +55,14 @@ export function DeckForm() {
             // });
 
             // console.log(res);
-            form.reset();
+            form.setValue("deckList", "");
             if (notFound.length > 0) {
                 let strNotFound = "---This cards weren't found---\n";
                 notFound.forEach((item) => (strNotFound += `${item.name}\n`));
-                strNotFound += "---The list below";
+                strNotFound += "---The list below was found---\n";
+                results.forEach((item) => {
+                    strNotFound += `${item.name} (${item.setCode})\n`;
+                });
                 form.setValue("deckList", strNotFound);
             }
             isFetching(false);

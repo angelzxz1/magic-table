@@ -15,20 +15,27 @@ type jsonData = {
     secondUrl: string;
     manaCost: string;
     secondManaCost: string;
+    setCode: string;
 };
 
 export const GET = async (req: NextRequest) => {
     try {
         const { searchParams } = new URL(req.url);
         const name = searchParams.get("name");
+        const setCode = searchParams.get("setCode");
         if (!name) return new NextResponse("Name is required", { status: 400 });
-        const cards = await db.card.findMany({
+        if (!setCode)
+            return new NextResponse("Set code is required", { status: 400 });
+        const card = await db.card.findUnique({
             where: {
-                name,
+                name_setCode: {
+                    name,
+                    setCode,
+                },
             },
         });
         return NextResponse.json({
-            cards,
+            card,
         });
     } catch (error) {
         console.error("Error finding card:", error);
@@ -45,11 +52,14 @@ export const POST = async (req: NextRequest) => {
             manaCost,
             secondManaCost,
             secondUrl,
+            setCode,
         } = (await req.json()) as jsonData;
         if (!imgUrl)
             return new NextResponse("imgUrl is required", { status: 400 });
         if (!name) return new NextResponse("name is required", { status: 400 });
         if (!scryfallId)
+            return new NextResponse("scryfallId is required", { status: 400 });
+        if (!setCode)
             return new NextResponse("scryfallId is required", { status: 400 });
 
         const existingCard = await db.card.findUnique({
@@ -69,6 +79,7 @@ export const POST = async (req: NextRequest) => {
                 scryfallId,
                 manaCost: manaCost ? manaCost : "",
                 secondManaCost: secondManaCost ? secondManaCost : "",
+                setCode,
             },
         });
 

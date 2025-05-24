@@ -32,7 +32,7 @@ export function replaceSpacesWithPlus(input: string): string {
 export type Card = {
     quantity: number;
     name: string;
-    set: string;
+    setCode: string;
 };
 export const parseDeckList = (input: string): Card[] => {
     return input
@@ -44,11 +44,11 @@ export const parseDeckList = (input: string): Card[] => {
             if (!match) {
                 throw new Error(`Línea inválida: "${line}"`);
             }
-            const [, quantity, name, set] = match;
+            const [, quantity, name, setCode] = match;
             return {
                 quantity: parseInt(quantity),
                 name,
-                set,
+                setCode,
             };
         });
 };
@@ -64,7 +64,7 @@ type DecksResponse = {
 type notFoundType = {
     quantity: number;
     name: string;
-    set: string;
+    setCode: string;
     error: boolean;
     data: null;
 };
@@ -72,62 +72,83 @@ type fetchCardDataType = {
     results: CardDB[];
     notFound: notFoundType[];
 };
+type AddCardToDBType = {
+    name: string;
+    setCode: string;
+    quantity: number;
+};
+const addCardToDB = async ({
+    name,
+    setCode,
+    quantity,
+}: AddCardToDBType): Promise<CardDB | notFoundType> => {
+    const encodedName = replaceSpacesWithPlus(name);
+    const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${setCode}`;
+
+    try {
+        const response = await axios.get(url);
+        const {
+            mana_cost,
+            image_uris,
+            name,
+            id,
+            card_faces,
+            set: setCode,
+        } = response.data;
+        if (!card_faces) {
+            const { large } = image_uris;
+            const addedCardRes = await axios.post("/api/cards", {
+                imgUrl: large,
+                name,
+                scryfallId: id,
+                manaCost: mana_cost,
+                setCode,
+            });
+            const { card }: DecksResponse = addedCardRes.data;
+            return card;
+        } else {
+            const [face1, face2] = card_faces;
+            const { image_uris: f1_Uris, manaCost: mc1 } = face1;
+            const { image_uris: f2_Uris, manaCost: mc2 } = face2;
+            const { large: f1_large } = f1_Uris;
+            const { large: f2_large } = f2_Uris;
+            const addedCardRes = await axios.post("/api/cards", {
+                imgUrl: f1_large,
+                secondUrl: f2_large,
+                name,
+                scryfallId: id,
+                manaCost: mc1,
+                secondManaCost: mc2,
+            });
+            const { card }: DecksResponse = addedCardRes.data;
+            return card;
+        }
+    } catch (error) {
+        console.error(`Error al obtener ${name} (${setCode})`, error);
+        return {
+            name,
+            setCode,
+            quantity,
+            error: true,
+            data: null,
+        };
+    }
+};
 export async function fetchCardData(cards: Card[]): Promise<fetchCardDataType> {
     const results: CardDB[] = [];
     const notFound: notFoundType[] = [];
-    for (const card of cards) {
-        const cardInDB = await findCard(card.name);
+    for (const cardItem of cards) {
+        const { name, quantity, setCode } = cardItem;
+        const cardInDB = await findCard({ name, setCode });
         if (!cardInDB) {
-            const encodedName = replaceSpacesWithPlus(card.name);
-            console.log(encodedName);
-            const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${card.set}`;
-
-            try {
-                const response = await axios.get(url);
-                const { mana_cost, image_uris, name, id, card_faces } =
-                    response.data;
-                if (!card_faces) {
-                    const { large } = image_uris;
-                    const addedCardRes = await axios.post("/api/cards", {
-                        imgUrl: large,
-                        name,
-                        scryfallId: id,
-                        manaCost: mana_cost,
-                    });
-                    const { card }: DecksResponse = addedCardRes.data;
-                    results.push(card);
-                } else {
-                    const [face1, face2] = card_faces;
-                    const { image_uris: f1_Uris, manaCost: mc1 } = face1;
-                    const { image_uris: f2_Uris, manaCost: mc2 } = face2;
-                    const { large: f1_large } = f1_Uris;
-                    const { large: f2_large } = f2_Uris;
-                    const addedCardRes = await axios.post("/api/cards", {
-                        imgUrl: f1_large,
-                        secondUrl: f2_large,
-                        name,
-                        scryfallId: id,
-                        manaCost: mc1,
-                        secondManaCost: mc2,
-                    });
-                    const { card: CardToList }: DecksResponse =
-                        addedCardRes.data;
-                    results.push(CardToList);
-                }
-            } catch (error) {
-                console.error(
-                    `Error al obtener ${card.name} (${card.set})`,
-                    error
-                );
-                notFound.push({
-                    ...card,
-                    error: true,
-                    data: null,
-                });
+            const cardToAdd = await addCardToDB({ name, setCode, quantity });
+            if (Object.keys(cardToAdd).includes("error")) {
+                notFound.push(cardToAdd as notFoundType);
+            } else {
+                results.push(cardToAdd as CardDB);
             }
-
             // Esperar 100 ms antes de continuar
-            await sleep(100);
+            await sleep(50);
         } else {
             results.push(cardInDB);
         }
@@ -164,19 +185,25 @@ export const createDeck = async ({
         console.log("Error Creating Deck: ", error);
     }
 };
-const findCard = async (name: string): Promise<CardDB | null> => {
+const findCard = async ({
+    name,
+    setCode,
+}: {
+    name: string;
+    setCode: string;
+}): Promise<CardDB | null> => {
     try {
-        const res = await axios.get<{ cards: CardDB[] }>("/api/cards", {
+        const res = await axios.get<{ card: CardDB }>("/api/cards", {
             params: {
                 name,
+                setCode,
             },
         });
         const { data } = res;
         if (!data) return null;
-        const { cards } = data;
-        if (!cards) return null;
-        if (cards.length === 0) return null;
-        return cards[0];
+        const { card } = data;
+        if (!card) return null;
+        return card;
     } catch (e) {
         console.log("Error finding card in DB");
         return null;

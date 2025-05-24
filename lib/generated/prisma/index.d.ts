@@ -3561,6 +3561,7 @@ export namespace Prisma {
     imgUrl: string | null
     secondUrl: string | null
     secondManaCost: string | null
+    setCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3574,6 +3575,7 @@ export namespace Prisma {
     imgUrl: string | null
     secondUrl: string | null
     secondManaCost: string | null
+    setCode: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3587,6 +3589,7 @@ export namespace Prisma {
     imgUrl: number
     secondUrl: number
     secondManaCost: number
+    setCode: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3602,6 +3605,7 @@ export namespace Prisma {
     imgUrl?: true
     secondUrl?: true
     secondManaCost?: true
+    setCode?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3615,6 +3619,7 @@ export namespace Prisma {
     imgUrl?: true
     secondUrl?: true
     secondManaCost?: true
+    setCode?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3628,6 +3633,7 @@ export namespace Prisma {
     imgUrl?: true
     secondUrl?: true
     secondManaCost?: true
+    setCode?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3714,6 +3720,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl: string | null
     secondManaCost: string | null
+    setCode: string
     createdAt: Date
     updatedAt: Date
     _count: CardCountAggregateOutputType | null
@@ -3744,6 +3751,7 @@ export namespace Prisma {
     imgUrl?: boolean
     secondUrl?: boolean
     secondManaCost?: boolean
+    setCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     decks?: boolean | Card$decksArgs<ExtArgs>
@@ -3759,6 +3767,7 @@ export namespace Prisma {
     imgUrl?: boolean
     secondUrl?: boolean
     secondManaCost?: boolean
+    setCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3772,6 +3781,7 @@ export namespace Prisma {
     imgUrl?: boolean
     secondUrl?: boolean
     secondManaCost?: boolean
+    setCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3785,11 +3795,12 @@ export namespace Prisma {
     imgUrl?: boolean
     secondUrl?: boolean
     secondManaCost?: boolean
+    setCode?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
+  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "setCode" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
   export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | Card$decksArgs<ExtArgs>
     _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
@@ -3811,6 +3822,7 @@ export namespace Prisma {
       imgUrl: string
       secondUrl: string | null
       secondManaCost: string | null
+      setCode: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["card"]>
@@ -4245,6 +4257,7 @@ export namespace Prisma {
     readonly imgUrl: FieldRef<"Card", 'String'>
     readonly secondUrl: FieldRef<"Card", 'String'>
     readonly secondManaCost: FieldRef<"Card", 'String'>
+    readonly setCode: FieldRef<"Card", 'String'>
     readonly createdAt: FieldRef<"Card", 'DateTime'>
     readonly updatedAt: FieldRef<"Card", 'DateTime'>
   }
@@ -6927,6 +6940,7 @@ export namespace Prisma {
     imgUrl: 'imgUrl',
     secondUrl: 'secondUrl',
     secondManaCost: 'secondManaCost',
+    setCode: 'setCode',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7197,6 +7211,7 @@ export namespace Prisma {
     imgUrl?: StringFilter<"Card"> | string
     secondUrl?: StringNullableFilter<"Card"> | string | null
     secondManaCost?: StringNullableFilter<"Card"> | string | null
+    setCode?: StringFilter<"Card"> | string
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
@@ -7211,6 +7226,7 @@ export namespace Prisma {
     imgUrl?: SortOrder
     secondUrl?: SortOrderInput | SortOrder
     secondManaCost?: SortOrderInput | SortOrder
+    setCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     decks?: DeckCardOrderByRelationAggregateInput
@@ -7219,6 +7235,7 @@ export namespace Prisma {
   export type CardWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     scryfallId?: string
+    name_setCode?: CardNameSetCodeCompoundUniqueInput
     AND?: CardWhereInput | CardWhereInput[]
     OR?: CardWhereInput[]
     NOT?: CardWhereInput | CardWhereInput[]
@@ -7228,10 +7245,11 @@ export namespace Prisma {
     imgUrl?: StringFilter<"Card"> | string
     secondUrl?: StringNullableFilter<"Card"> | string | null
     secondManaCost?: StringNullableFilter<"Card"> | string | null
+    setCode?: StringFilter<"Card"> | string
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
-  }, "id" | "scryfallId">
+  }, "id" | "scryfallId" | "name_setCode">
 
   export type CardOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7242,6 +7260,7 @@ export namespace Prisma {
     imgUrl?: SortOrder
     secondUrl?: SortOrderInput | SortOrder
     secondManaCost?: SortOrderInput | SortOrder
+    setCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CardCountOrderByAggregateInput
@@ -7261,6 +7280,7 @@ export namespace Prisma {
     imgUrl?: StringWithAggregatesFilter<"Card"> | string
     secondUrl?: StringNullableWithAggregatesFilter<"Card"> | string | null
     secondManaCost?: StringNullableWithAggregatesFilter<"Card"> | string | null
+    setCode?: StringWithAggregatesFilter<"Card"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
   }
@@ -7544,6 +7564,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl?: string | null
     secondManaCost?: string | null
+    setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardCreateNestedManyWithoutCardInput
@@ -7558,6 +7579,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl?: string | null
     secondManaCost?: string | null
+    setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
@@ -7572,6 +7594,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUpdateManyWithoutCardNestedInput
@@ -7586,6 +7609,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
@@ -7600,6 +7624,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl?: string | null
     secondManaCost?: string | null
+    setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7613,6 +7638,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7626,6 +7652,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7923,6 +7950,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CardNameSetCodeCompoundUniqueInput = {
+    name: string
+    setCode: string
+  }
+
   export type CardCountOrderByAggregateInput = {
     id?: SortOrder
     scryfallId?: SortOrder
@@ -7932,6 +7964,7 @@ export namespace Prisma {
     imgUrl?: SortOrder
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
+    setCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7945,6 +7978,7 @@ export namespace Prisma {
     imgUrl?: SortOrder
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
+    setCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7958,6 +7992,7 @@ export namespace Prisma {
     imgUrl?: SortOrder
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
+    setCode?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8857,6 +8892,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl?: string | null
     secondManaCost?: string | null
+    setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8870,6 +8906,7 @@ export namespace Prisma {
     imgUrl: string
     secondUrl?: string | null
     secondManaCost?: string | null
+    setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8930,6 +8967,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8943,6 +8981,7 @@ export namespace Prisma {
     imgUrl?: StringFieldUpdateOperationsInput | string
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

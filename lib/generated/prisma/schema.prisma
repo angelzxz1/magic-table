@@ -38,17 +38,21 @@ model Session {
 }
 
 model Card {
-  id             String     @id @default(cuid())
-  scryfallId     String     @unique
+  id             String  @id @default(cuid())
+  scryfallId     String  @unique
   name           String
   manaCost       String?
   typeLine       String?
   imgUrl         String
   secondUrl      String?
   secondManaCost String?
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  decks          DeckCard[]
+  setCode        String
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  decks     DeckCard[]
+
+  @@unique([name, setCode])
 }
 
 model Deck {
