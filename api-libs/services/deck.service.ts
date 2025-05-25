@@ -10,9 +10,9 @@ export const getDecksByUser = async (userId: string) => {
 export const createDeck = async (
     userId: string,
     name: string,
-    format: string
+    commanderId: string
 ) => {
     return db.deck.create({
-        data: { name, format, userId },
+        data: { name, userId, commanderId },
     });
 };

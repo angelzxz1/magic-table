@@ -1,12 +1,8 @@
 import { db } from "@/lib/db";
 
-export const addCardToDeck = async (
-    name: string,
-    deckId: string,
-    imgUrl: string
-) => {
-    return db.card.create({
-        data: { imgUrl, scryfallId: deckId, name },
+export const addCardToDeck = async (deckId: string, cardId: string) => {
+    return db.deckCard.create({
+        data: { deckId, cardId },
     });
 };
 

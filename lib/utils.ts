@@ -68,8 +68,12 @@ type notFoundType = {
     error: boolean;
     data: null;
 };
+export type result = {
+    card: CardDB;
+    quantity: number;
+};
 type fetchCardDataType = {
-    results: CardDB[];
+    results: result[];
     notFound: notFoundType[];
 };
 type AddCardToDBType = {
@@ -81,12 +85,12 @@ const addCardToDB = async ({
     name,
     setCode,
     quantity,
-}: AddCardToDBType): Promise<CardDB | notFoundType> => {
+}: AddCardToDBType): Promise<result | notFoundType> => {
     const encodedName = replaceSpacesWithPlus(name);
     const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${setCode}`;
-
     try {
         const response = await axios.get(url);
+
         const {
             mana_cost,
             image_uris,
@@ -94,21 +98,49 @@ const addCardToDB = async ({
             id,
             card_faces,
             set: setCode,
+            type_line,
         } = response.data;
         if (!card_faces) {
             const { large } = image_uris;
+            const typeLine = getLastTypeWord(type_line);
+            if (!typeLine) {
+                console.error("Error with the type line: ", type_line);
+                return {
+                    name,
+                    setCode,
+                    quantity,
+                    error: true,
+                    data: null,
+                };
+            }
             const addedCardRes = await axios.post("/api/cards", {
                 imgUrl: large,
                 name,
                 scryfallId: id,
                 manaCost: mana_cost,
                 setCode,
+                typeLine,
             });
             const { card }: DecksResponse = addedCardRes.data;
-            return card;
+            return { card, quantity };
         } else {
             const [face1, face2] = card_faces;
-            const { image_uris: f1_Uris, manaCost: mc1 } = face1;
+            const {
+                image_uris: f1_Uris,
+                manaCost: mc1,
+                type_line: typeLine1,
+            } = face1;
+            const typeLine = getLastTypeWord(typeLine1);
+            if (!typeLine) {
+                console.error("Error with the type line: ", type_line);
+                return {
+                    name,
+                    setCode,
+                    quantity,
+                    error: true,
+                    data: null,
+                };
+            }
             const { image_uris: f2_Uris, manaCost: mc2 } = face2;
             const { large: f1_large } = f1_Uris;
             const { large: f2_large } = f2_Uris;
@@ -119,9 +151,11 @@ const addCardToDB = async ({
                 scryfallId: id,
                 manaCost: mc1,
                 secondManaCost: mc2,
+                setCode,
+                typeLine,
             });
             const { card }: DecksResponse = addedCardRes.data;
-            return card;
+            return { card, quantity };
         }
     } catch (error) {
         console.error(`Error al obtener ${name} (${setCode})`, error);
@@ -135,7 +169,7 @@ const addCardToDB = async ({
     }
 };
 export async function fetchCardData(cards: Card[]): Promise<fetchCardDataType> {
-    const results: CardDB[] = [];
+    const results: result[] = [];
     const notFound: notFoundType[] = [];
     for (const cardItem of cards) {
         const { name, quantity, setCode } = cardItem;
@@ -145,12 +179,17 @@ export async function fetchCardData(cards: Card[]): Promise<fetchCardDataType> {
             if (Object.keys(cardToAdd).includes("error")) {
                 notFound.push(cardToAdd as notFoundType);
             } else {
-                results.push(cardToAdd as CardDB);
+                results.push(cardToAdd as result);
             }
             // Esperar 100 ms antes de continuar
             await sleep(50);
         } else {
-            results.push(cardInDB);
+            // Si la carta ya existe en la base de datos, simplemente la agregamos a los resultados
+            const cardInDBWithQuantity = {
+                card: cardInDB,
+                quantity,
+            };
+            results.push(cardInDBWithQuantity);
         }
     }
 
@@ -163,7 +202,7 @@ export const createDeck = async ({
     commander,
     deckName,
 }: {
-    DeckList: CardDB[];
+    DeckList: result[];
     userId: string;
     commander: String;
     deckName: String;
@@ -180,7 +219,7 @@ export const createDeck = async ({
         );
         const { data } = deckRes;
         console.log(data);
-        DeckList.forEach((card) => {});
+        return data;
     } catch (error) {
         console.log("Error Creating Deck: ", error);
     }
@@ -209,3 +248,19 @@ const findCard = async ({
         return null;
     }
 };
+
+export function getLastTypeWord(text: string): string | null {
+    if (!text.trim()) return null;
+
+    // Normaliza: quita acentos y convierte a minúsculas
+    const normalized = text
+        .normalize("NFD") // separa caracteres y sus acentos
+        .replace(/[\u0300-\u036f]/g, "") // elimina acentos
+        .toLowerCase();
+
+    const parts = normalized.split("—");
+    const beforeDash = parts[0].trim(); // texto antes del em dash o todo si no hay
+
+    const words = beforeDash.split(/\s+/); // divide en palabras
+    return words.length > 0 ? words[words.length - 1] : null;
+}

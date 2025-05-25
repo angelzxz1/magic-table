@@ -1274,10 +1274,12 @@ export namespace Prisma {
 
   export type CardCountOutputType = {
     decks: number
+    commanderOf: number
   }
 
   export type CardCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | CardCountOutputTypeCountDecksArgs
+    commanderOf?: boolean | CardCountOutputTypeCountCommanderOfArgs
   }
 
   // Custom InputTypes
@@ -1296,6 +1298,13 @@ export namespace Prisma {
    */
   export type CardCountOutputTypeCountDecksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DeckCardWhereInput
+  }
+
+  /**
+   * CardCountOutputType without action
+   */
+  export type CardCountOutputTypeCountCommanderOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeckWhereInput
   }
 
 
@@ -3755,6 +3764,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     decks?: boolean | Card$decksArgs<ExtArgs>
+    commanderOf?: boolean | Card$commanderOfArgs<ExtArgs>
     _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["card"]>
 
@@ -3803,6 +3813,7 @@ export namespace Prisma {
   export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "setCode" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
   export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | Card$decksArgs<ExtArgs>
+    commanderOf?: boolean | Card$commanderOfArgs<ExtArgs>
     _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3812,6 +3823,7 @@ export namespace Prisma {
     name: "Card"
     objects: {
       decks: Prisma.$DeckCardPayload<ExtArgs>[]
+      commanderOf: Prisma.$DeckPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4220,6 +4232,7 @@ export namespace Prisma {
   export interface Prisma__CardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     decks<T extends Card$decksArgs<ExtArgs> = {}>(args?: Subset<T, Card$decksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeckCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    commanderOf<T extends Card$commanderOfArgs<ExtArgs> = {}>(args?: Subset<T, Card$commanderOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4672,6 +4685,30 @@ export namespace Prisma {
   }
 
   /**
+   * Card.commanderOf
+   */
+  export type Card$commanderOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deck
+     */
+    select?: DeckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deck
+     */
+    omit?: DeckOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeckInclude<ExtArgs> | null
+    where?: DeckWhereInput
+    orderBy?: DeckOrderByWithRelationInput | DeckOrderByWithRelationInput[]
+    cursor?: DeckWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeckScalarFieldEnum | DeckScalarFieldEnum[]
+  }
+
+  /**
    * Card without action
    */
   export type CardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4704,8 +4741,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
-    commander: string | null
     isPublic: boolean | null
+    commanderId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4714,8 +4751,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
-    commander: string | null
     isPublic: boolean | null
+    commanderId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4724,8 +4761,8 @@ export namespace Prisma {
     id: number
     name: number
     userId: number
-    commander: number
     isPublic: number
+    commanderId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4736,8 +4773,8 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    commander?: true
     isPublic?: true
+    commanderId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4746,8 +4783,8 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    commander?: true
     isPublic?: true
+    commanderId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4756,8 +4793,8 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
-    commander?: true
     isPublic?: true
+    commanderId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4839,8 +4876,8 @@ export namespace Prisma {
     id: string
     name: string
     userId: string
-    commander: string
     isPublic: boolean
+    commanderId: string
     createdAt: Date
     updatedAt: Date
     _count: DeckCountAggregateOutputType | null
@@ -4866,12 +4903,13 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    commander?: boolean
     isPublic?: boolean
+    commanderId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     cards?: boolean | Deck$cardsArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
     _count?: boolean | DeckCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deck"]>
 
@@ -4879,45 +4917,50 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
-    commander?: boolean
     isPublic?: boolean
+    commanderId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deck"]>
 
   export type DeckSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     userId?: boolean
-    commander?: boolean
     isPublic?: boolean
+    commanderId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["deck"]>
 
   export type DeckSelectScalar = {
     id?: boolean
     name?: boolean
     userId?: boolean
-    commander?: boolean
     isPublic?: boolean
+    commanderId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type DeckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "commander" | "isPublic" | "createdAt" | "updatedAt", ExtArgs["result"]["deck"]>
+  export type DeckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "isPublic" | "commanderId" | "createdAt" | "updatedAt", ExtArgs["result"]["deck"]>
   export type DeckInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     cards?: boolean | Deck$cardsArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
     _count?: boolean | DeckCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DeckIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
   }
   export type DeckIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    commander?: boolean | CardDefaultArgs<ExtArgs>
   }
 
   export type $DeckPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4925,13 +4968,14 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       cards: Prisma.$DeckCardPayload<ExtArgs>[]
+      commander: Prisma.$CardPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       userId: string
-      commander: string
       isPublic: boolean
+      commanderId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["deck"]>
@@ -5330,6 +5374,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     cards<T extends Deck$cardsArgs<ExtArgs> = {}>(args?: Subset<T, Deck$cardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeckCardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    commander<T extends CardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CardDefaultArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5362,8 +5407,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Deck", 'String'>
     readonly name: FieldRef<"Deck", 'String'>
     readonly userId: FieldRef<"Deck", 'String'>
-    readonly commander: FieldRef<"Deck", 'String'>
     readonly isPublic: FieldRef<"Deck", 'Boolean'>
+    readonly commanderId: FieldRef<"Deck", 'String'>
     readonly createdAt: FieldRef<"Deck", 'DateTime'>
     readonly updatedAt: FieldRef<"Deck", 'DateTime'>
   }
@@ -6952,8 +6997,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     userId: 'userId',
-    commander: 'commander',
     isPublic: 'isPublic',
+    commanderId: 'commanderId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7215,6 +7260,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
+    commanderOf?: DeckListRelationFilter
   }
 
   export type CardOrderByWithRelationInput = {
@@ -7230,6 +7276,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     decks?: DeckCardOrderByRelationAggregateInput
+    commanderOf?: DeckOrderByRelationAggregateInput
   }
 
   export type CardWhereUniqueInput = Prisma.AtLeast<{
@@ -7249,6 +7296,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
+    commanderOf?: DeckListRelationFilter
   }, "id" | "scryfallId" | "name_setCode">
 
   export type CardOrderByWithAggregationInput = {
@@ -7292,24 +7340,26 @@ export namespace Prisma {
     id?: StringFilter<"Deck"> | string
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
+    commanderId?: StringFilter<"Deck"> | string
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     cards?: DeckCardListRelationFilter
+    commander?: XOR<CardScalarRelationFilter, CardWhereInput>
   }
 
   export type DeckOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    commander?: SortOrder
     isPublic?: SortOrder
+    commanderId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     cards?: DeckCardOrderByRelationAggregateInput
+    commander?: CardOrderByWithRelationInput
   }
 
   export type DeckWhereUniqueInput = Prisma.AtLeast<{
@@ -7319,20 +7369,21 @@ export namespace Prisma {
     NOT?: DeckWhereInput | DeckWhereInput[]
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
+    commanderId?: StringFilter<"Deck"> | string
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     cards?: DeckCardListRelationFilter
+    commander?: XOR<CardScalarRelationFilter, CardWhereInput>
   }, "id">
 
   export type DeckOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    commander?: SortOrder
     isPublic?: SortOrder
+    commanderId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: DeckCountOrderByAggregateInput
@@ -7347,8 +7398,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Deck"> | string
     name?: StringWithAggregatesFilter<"Deck"> | string
     userId?: StringWithAggregatesFilter<"Deck"> | string
-    commander?: StringWithAggregatesFilter<"Deck"> | string
     isPublic?: BoolWithAggregatesFilter<"Deck"> | boolean
+    commanderId?: StringWithAggregatesFilter<"Deck"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Deck"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Deck"> | Date | string
   }
@@ -7568,6 +7619,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardCreateNestedManyWithoutCardInput
+    commanderOf?: DeckCreateNestedManyWithoutCommanderInput
   }
 
   export type CardUncheckedCreateInput = {
@@ -7583,6 +7635,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
+    commanderOf?: DeckUncheckedCreateNestedManyWithoutCommanderInput
   }
 
   export type CardUpdateInput = {
@@ -7598,6 +7651,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUpdateManyWithoutCardNestedInput
+    commanderOf?: DeckUpdateManyWithoutCommanderNestedInput
   }
 
   export type CardUncheckedUpdateInput = {
@@ -7613,6 +7667,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
+    commanderOf?: DeckUncheckedUpdateManyWithoutCommanderNestedInput
   }
 
   export type CardCreateManyInput = {
@@ -7660,20 +7715,20 @@ export namespace Prisma {
   export type DeckCreateInput = {
     id?: string
     name: string
-    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutDecksInput
     cards?: DeckCardCreateNestedManyWithoutDeckInput
+    commander: CardCreateNestedOneWithoutCommanderOfInput
   }
 
   export type DeckUncheckedCreateInput = {
     id?: string
     name: string
     userId: string
-    commander: string
     isPublic?: boolean
+    commanderId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     cards?: DeckCardUncheckedCreateNestedManyWithoutDeckInput
@@ -7682,20 +7737,20 @@ export namespace Prisma {
   export type DeckUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutDecksNestedInput
     cards?: DeckCardUpdateManyWithoutDeckNestedInput
+    commander?: CardUpdateOneRequiredWithoutCommanderOfNestedInput
   }
 
   export type DeckUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    commanderId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cards?: DeckCardUncheckedUpdateManyWithoutDeckNestedInput
@@ -7705,8 +7760,8 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
-    commander: string
     isPublic?: boolean
+    commanderId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7714,7 +7769,6 @@ export namespace Prisma {
   export type DeckUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7724,8 +7778,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    commanderId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8020,12 +8074,17 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type CardScalarRelationFilter = {
+    is?: CardWhereInput
+    isNot?: CardWhereInput
+  }
+
   export type DeckCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    commander?: SortOrder
     isPublic?: SortOrder
+    commanderId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8034,8 +8093,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    commander?: SortOrder
     isPublic?: SortOrder
+    commanderId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8044,8 +8103,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
-    commander?: SortOrder
     isPublic?: SortOrder
+    commanderId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8072,11 +8131,6 @@ export namespace Prisma {
   export type DeckScalarRelationFilter = {
     is?: DeckWhereInput
     isNot?: DeckWhereInput
-  }
-
-  export type CardScalarRelationFilter = {
-    is?: CardWhereInput
-    isNot?: CardWhereInput
   }
 
   export type DeckCardCountOrderByAggregateInput = {
@@ -8237,11 +8291,25 @@ export namespace Prisma {
     connect?: DeckCardWhereUniqueInput | DeckCardWhereUniqueInput[]
   }
 
+  export type DeckCreateNestedManyWithoutCommanderInput = {
+    create?: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput> | DeckCreateWithoutCommanderInput[] | DeckUncheckedCreateWithoutCommanderInput[]
+    connectOrCreate?: DeckCreateOrConnectWithoutCommanderInput | DeckCreateOrConnectWithoutCommanderInput[]
+    createMany?: DeckCreateManyCommanderInputEnvelope
+    connect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+  }
+
   export type DeckCardUncheckedCreateNestedManyWithoutCardInput = {
     create?: XOR<DeckCardCreateWithoutCardInput, DeckCardUncheckedCreateWithoutCardInput> | DeckCardCreateWithoutCardInput[] | DeckCardUncheckedCreateWithoutCardInput[]
     connectOrCreate?: DeckCardCreateOrConnectWithoutCardInput | DeckCardCreateOrConnectWithoutCardInput[]
     createMany?: DeckCardCreateManyCardInputEnvelope
     connect?: DeckCardWhereUniqueInput | DeckCardWhereUniqueInput[]
+  }
+
+  export type DeckUncheckedCreateNestedManyWithoutCommanderInput = {
+    create?: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput> | DeckCreateWithoutCommanderInput[] | DeckUncheckedCreateWithoutCommanderInput[]
+    connectOrCreate?: DeckCreateOrConnectWithoutCommanderInput | DeckCreateOrConnectWithoutCommanderInput[]
+    createMany?: DeckCreateManyCommanderInputEnvelope
+    connect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -8262,6 +8330,20 @@ export namespace Prisma {
     deleteMany?: DeckCardScalarWhereInput | DeckCardScalarWhereInput[]
   }
 
+  export type DeckUpdateManyWithoutCommanderNestedInput = {
+    create?: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput> | DeckCreateWithoutCommanderInput[] | DeckUncheckedCreateWithoutCommanderInput[]
+    connectOrCreate?: DeckCreateOrConnectWithoutCommanderInput | DeckCreateOrConnectWithoutCommanderInput[]
+    upsert?: DeckUpsertWithWhereUniqueWithoutCommanderInput | DeckUpsertWithWhereUniqueWithoutCommanderInput[]
+    createMany?: DeckCreateManyCommanderInputEnvelope
+    set?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    disconnect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    delete?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    connect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    update?: DeckUpdateWithWhereUniqueWithoutCommanderInput | DeckUpdateWithWhereUniqueWithoutCommanderInput[]
+    updateMany?: DeckUpdateManyWithWhereWithoutCommanderInput | DeckUpdateManyWithWhereWithoutCommanderInput[]
+    deleteMany?: DeckScalarWhereInput | DeckScalarWhereInput[]
+  }
+
   export type DeckCardUncheckedUpdateManyWithoutCardNestedInput = {
     create?: XOR<DeckCardCreateWithoutCardInput, DeckCardUncheckedCreateWithoutCardInput> | DeckCardCreateWithoutCardInput[] | DeckCardUncheckedCreateWithoutCardInput[]
     connectOrCreate?: DeckCardCreateOrConnectWithoutCardInput | DeckCardCreateOrConnectWithoutCardInput[]
@@ -8276,6 +8358,20 @@ export namespace Prisma {
     deleteMany?: DeckCardScalarWhereInput | DeckCardScalarWhereInput[]
   }
 
+  export type DeckUncheckedUpdateManyWithoutCommanderNestedInput = {
+    create?: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput> | DeckCreateWithoutCommanderInput[] | DeckUncheckedCreateWithoutCommanderInput[]
+    connectOrCreate?: DeckCreateOrConnectWithoutCommanderInput | DeckCreateOrConnectWithoutCommanderInput[]
+    upsert?: DeckUpsertWithWhereUniqueWithoutCommanderInput | DeckUpsertWithWhereUniqueWithoutCommanderInput[]
+    createMany?: DeckCreateManyCommanderInputEnvelope
+    set?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    disconnect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    delete?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    connect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
+    update?: DeckUpdateWithWhereUniqueWithoutCommanderInput | DeckUpdateWithWhereUniqueWithoutCommanderInput[]
+    updateMany?: DeckUpdateManyWithWhereWithoutCommanderInput | DeckUpdateManyWithWhereWithoutCommanderInput[]
+    deleteMany?: DeckScalarWhereInput | DeckScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutDecksInput = {
     create?: XOR<UserCreateWithoutDecksInput, UserUncheckedCreateWithoutDecksInput>
     connectOrCreate?: UserCreateOrConnectWithoutDecksInput
@@ -8287,6 +8383,12 @@ export namespace Prisma {
     connectOrCreate?: DeckCardCreateOrConnectWithoutDeckInput | DeckCardCreateOrConnectWithoutDeckInput[]
     createMany?: DeckCardCreateManyDeckInputEnvelope
     connect?: DeckCardWhereUniqueInput | DeckCardWhereUniqueInput[]
+  }
+
+  export type CardCreateNestedOneWithoutCommanderOfInput = {
+    create?: XOR<CardCreateWithoutCommanderOfInput, CardUncheckedCreateWithoutCommanderOfInput>
+    connectOrCreate?: CardCreateOrConnectWithoutCommanderOfInput
+    connect?: CardWhereUniqueInput
   }
 
   export type DeckCardUncheckedCreateNestedManyWithoutDeckInput = {
@@ -8320,6 +8422,14 @@ export namespace Prisma {
     update?: DeckCardUpdateWithWhereUniqueWithoutDeckInput | DeckCardUpdateWithWhereUniqueWithoutDeckInput[]
     updateMany?: DeckCardUpdateManyWithWhereWithoutDeckInput | DeckCardUpdateManyWithWhereWithoutDeckInput[]
     deleteMany?: DeckCardScalarWhereInput | DeckCardScalarWhereInput[]
+  }
+
+  export type CardUpdateOneRequiredWithoutCommanderOfNestedInput = {
+    create?: XOR<CardCreateWithoutCommanderOfInput, CardUncheckedCreateWithoutCommanderOfInput>
+    connectOrCreate?: CardCreateOrConnectWithoutCommanderOfInput
+    upsert?: CardUpsertWithoutCommanderOfInput
+    connect?: CardWhereUniqueInput
+    update?: XOR<XOR<CardUpdateToOneWithWhereWithoutCommanderOfInput, CardUpdateWithoutCommanderOfInput>, CardUncheckedUpdateWithoutCommanderOfInput>
   }
 
   export type DeckCardUncheckedUpdateManyWithoutDeckNestedInput = {
@@ -8524,18 +8634,18 @@ export namespace Prisma {
   export type DeckCreateWithoutUserInput = {
     id?: string
     name: string
-    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     cards?: DeckCardCreateNestedManyWithoutDeckInput
+    commander: CardCreateNestedOneWithoutCommanderOfInput
   }
 
   export type DeckUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
-    commander: string
     isPublic?: boolean
+    commanderId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     cards?: DeckCardUncheckedCreateNestedManyWithoutDeckInput
@@ -8596,8 +8706,8 @@ export namespace Prisma {
     id?: StringFilter<"Deck"> | string
     name?: StringFilter<"Deck"> | string
     userId?: StringFilter<"Deck"> | string
-    commander?: StringFilter<"Deck"> | string
     isPublic?: BoolFilter<"Deck"> | boolean
+    commanderId?: StringFilter<"Deck"> | string
     createdAt?: DateTimeFilter<"Deck"> | Date | string
     updatedAt?: DateTimeFilter<"Deck"> | Date | string
   }
@@ -8722,6 +8832,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DeckCreateWithoutCommanderInput = {
+    id?: string
+    name: string
+    isPublic?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutDecksInput
+    cards?: DeckCardCreateNestedManyWithoutDeckInput
+  }
+
+  export type DeckUncheckedCreateWithoutCommanderInput = {
+    id?: string
+    name: string
+    userId: string
+    isPublic?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    cards?: DeckCardUncheckedCreateNestedManyWithoutDeckInput
+  }
+
+  export type DeckCreateOrConnectWithoutCommanderInput = {
+    where: DeckWhereUniqueInput
+    create: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput>
+  }
+
+  export type DeckCreateManyCommanderInputEnvelope = {
+    data: DeckCreateManyCommanderInput | DeckCreateManyCommanderInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DeckCardUpsertWithWhereUniqueWithoutCardInput = {
     where: DeckCardWhereUniqueInput
     update: XOR<DeckCardUpdateWithoutCardInput, DeckCardUncheckedUpdateWithoutCardInput>
@@ -8746,6 +8886,22 @@ export namespace Prisma {
     deckId?: StringFilter<"DeckCard"> | string
     cardId?: StringFilter<"DeckCard"> | string
     count?: IntFilter<"DeckCard"> | number
+  }
+
+  export type DeckUpsertWithWhereUniqueWithoutCommanderInput = {
+    where: DeckWhereUniqueInput
+    update: XOR<DeckUpdateWithoutCommanderInput, DeckUncheckedUpdateWithoutCommanderInput>
+    create: XOR<DeckCreateWithoutCommanderInput, DeckUncheckedCreateWithoutCommanderInput>
+  }
+
+  export type DeckUpdateWithWhereUniqueWithoutCommanderInput = {
+    where: DeckWhereUniqueInput
+    data: XOR<DeckUpdateWithoutCommanderInput, DeckUncheckedUpdateWithoutCommanderInput>
+  }
+
+  export type DeckUpdateManyWithWhereWithoutCommanderInput = {
+    where: DeckScalarWhereInput
+    data: XOR<DeckUpdateManyMutationInput, DeckUncheckedUpdateManyWithoutCommanderInput>
   }
 
   export type UserCreateWithoutDecksInput = {
@@ -8803,6 +8959,41 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CardCreateWithoutCommanderOfInput = {
+    id?: string
+    scryfallId: string
+    name: string
+    manaCost?: string | null
+    typeLine?: string | null
+    imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
+    setCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    decks?: DeckCardCreateNestedManyWithoutCardInput
+  }
+
+  export type CardUncheckedCreateWithoutCommanderOfInput = {
+    id?: string
+    scryfallId: string
+    name: string
+    manaCost?: string | null
+    typeLine?: string | null
+    imgUrl: string
+    secondUrl?: string | null
+    secondManaCost?: string | null
+    setCode: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
+  }
+
+  export type CardCreateOrConnectWithoutCommanderOfInput = {
+    where: CardWhereUniqueInput
+    create: XOR<CardCreateWithoutCommanderOfInput, CardUncheckedCreateWithoutCommanderOfInput>
+  }
+
   export type UserUpsertWithoutDecksInput = {
     update: XOR<UserUpdateWithoutDecksInput, UserUncheckedUpdateWithoutDecksInput>
     create: XOR<UserCreateWithoutDecksInput, UserUncheckedCreateWithoutDecksInput>
@@ -8858,22 +9049,63 @@ export namespace Prisma {
     data: XOR<DeckCardUpdateManyMutationInput, DeckCardUncheckedUpdateManyWithoutDeckInput>
   }
 
+  export type CardUpsertWithoutCommanderOfInput = {
+    update: XOR<CardUpdateWithoutCommanderOfInput, CardUncheckedUpdateWithoutCommanderOfInput>
+    create: XOR<CardCreateWithoutCommanderOfInput, CardUncheckedCreateWithoutCommanderOfInput>
+    where?: CardWhereInput
+  }
+
+  export type CardUpdateToOneWithWhereWithoutCommanderOfInput = {
+    where?: CardWhereInput
+    data: XOR<CardUpdateWithoutCommanderOfInput, CardUncheckedUpdateWithoutCommanderOfInput>
+  }
+
+  export type CardUpdateWithoutCommanderOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scryfallId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    manaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    typeLine?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    decks?: DeckCardUpdateManyWithoutCardNestedInput
+  }
+
+  export type CardUncheckedUpdateWithoutCommanderOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    scryfallId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    manaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    typeLine?: NullableStringFieldUpdateOperationsInput | string | null
+    imgUrl?: StringFieldUpdateOperationsInput | string
+    secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
+    setCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
+  }
+
   export type DeckCreateWithoutCardsInput = {
     id?: string
     name: string
-    commander: string
     isPublic?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutDecksInput
+    commander: CardCreateNestedOneWithoutCommanderOfInput
   }
 
   export type DeckUncheckedCreateWithoutCardsInput = {
     id?: string
     name: string
     userId: string
-    commander: string
     isPublic?: boolean
+    commanderId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8895,6 +9127,7 @@ export namespace Prisma {
     setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    commanderOf?: DeckCreateNestedManyWithoutCommanderInput
   }
 
   export type CardUncheckedCreateWithoutDecksInput = {
@@ -8909,6 +9142,7 @@ export namespace Prisma {
     setCode: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    commanderOf?: DeckUncheckedCreateNestedManyWithoutCommanderInput
   }
 
   export type CardCreateOrConnectWithoutDecksInput = {
@@ -8930,19 +9164,19 @@ export namespace Prisma {
   export type DeckUpdateWithoutCardsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutDecksNestedInput
+    commander?: CardUpdateOneRequiredWithoutCommanderOfNestedInput
   }
 
   export type DeckUncheckedUpdateWithoutCardsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    commanderId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8970,6 +9204,7 @@ export namespace Prisma {
     setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    commanderOf?: DeckUpdateManyWithoutCommanderNestedInput
   }
 
   export type CardUncheckedUpdateWithoutDecksInput = {
@@ -8984,13 +9219,14 @@ export namespace Prisma {
     setCode?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    commanderOf?: DeckUncheckedUpdateManyWithoutCommanderNestedInput
   }
 
   export type DeckCreateManyUserInput = {
     id?: string
     name: string
-    commander: string
     isPublic?: boolean
+    commanderId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9004,18 +9240,18 @@ export namespace Prisma {
   export type DeckUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cards?: DeckCardUpdateManyWithoutDeckNestedInput
+    commander?: CardUpdateOneRequiredWithoutCommanderOfNestedInput
   }
 
   export type DeckUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    commanderId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cards?: DeckCardUncheckedUpdateManyWithoutDeckNestedInput
@@ -9024,8 +9260,8 @@ export namespace Prisma {
   export type DeckUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    commander?: StringFieldUpdateOperationsInput | string
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    commanderId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9054,6 +9290,15 @@ export namespace Prisma {
     count?: number
   }
 
+  export type DeckCreateManyCommanderInput = {
+    id?: string
+    name: string
+    userId: string
+    isPublic?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type DeckCardUpdateWithoutCardInput = {
     id?: StringFieldUpdateOperationsInput | string
     count?: IntFieldUpdateOperationsInput | number
@@ -9070,6 +9315,35 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     deckId?: StringFieldUpdateOperationsInput | string
     count?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DeckUpdateWithoutCommanderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDecksNestedInput
+    cards?: DeckCardUpdateManyWithoutDeckNestedInput
+  }
+
+  export type DeckUncheckedUpdateWithoutCommanderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cards?: DeckCardUncheckedUpdateManyWithoutDeckNestedInput
+  }
+
+  export type DeckUncheckedUpdateManyWithoutCommanderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DeckCardCreateManyDeckInput = {

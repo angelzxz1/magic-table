@@ -16,6 +16,7 @@ type jsonData = {
     manaCost: string;
     secondManaCost: string;
     setCode: string;
+    typeLine: string;
 };
 
 export const GET = async (req: NextRequest) => {
@@ -53,15 +54,17 @@ export const POST = async (req: NextRequest) => {
             secondManaCost,
             secondUrl,
             setCode,
+            typeLine,
         } = (await req.json()) as jsonData;
         if (!imgUrl)
-            return new NextResponse("imgUrl is required", { status: 400 });
-        if (!name) return new NextResponse("name is required", { status: 400 });
+            return new NextResponse("Img url is required", { status: 400 });
+        if (!name) return new NextResponse("Name is required", { status: 400 });
         if (!scryfallId)
-            return new NextResponse("scryfallId is required", { status: 400 });
+            return new NextResponse("Scryfall ID is required", { status: 400 });
         if (!setCode)
-            return new NextResponse("scryfallId is required", { status: 400 });
-
+            return new NextResponse("Set Code is required", { status: 400 });
+        if (!typeLine)
+            return new NextResponse("Type line is required", { status: 400 });
         const existingCard = await db.card.findUnique({
             where: {
                 scryfallId,
@@ -80,6 +83,7 @@ export const POST = async (req: NextRequest) => {
                 manaCost: manaCost ? manaCost : "",
                 secondManaCost: secondManaCost ? secondManaCost : "",
                 setCode,
+                typeLine,
             },
         });
 

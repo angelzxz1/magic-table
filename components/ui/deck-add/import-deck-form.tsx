@@ -19,6 +19,8 @@ import { useState } from "react";
 import { Import, Loader } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { UserWithoutPassword } from "@/store/features/user/userSlice";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     deckName: z.string().min(5),
@@ -27,6 +29,7 @@ const formSchema = z.object({
 });
 
 export function DeckForm() {
+    const router = useRouter();
     const user = useAppSelector(
         (state) => state.user.user
     ) as UserWithoutPassword;
@@ -42,34 +45,45 @@ export function DeckForm() {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            isFetching(true);
-            const { commander, deckName } = values;
-            const decklist = parseDeckList(values.deckList);
-            const { notFound, results } = await fetchCardData(decklist);
-            // const res = await createDeck({
-            //     commander,
-            //     DeckList: results,
-            //     deckName,
-            //     userId: user.id,
-            // });
+        isFetching(true);
+        const { commander, deckName } = values;
+        const decklist = parseDeckList(values.deckList);
+        const { notFound, results } = await fetchCardData(decklist);
 
-            // console.log(res);
+        if (notFound.length > 0) {
             form.setValue("deckList", "");
-            if (notFound.length > 0) {
-                let strNotFound = "---This cards weren't found---\n";
-                notFound.forEach((item) => (strNotFound += `${item.name}\n`));
-                strNotFound += "---The list below was found---\n";
-                results.forEach((item) => {
-                    strNotFound += `${item.name} (${item.setCode})\n`;
-                });
-                form.setValue("deckList", strNotFound);
+            let strNotFound = "---This cards weren't found---\n";
+            notFound.forEach((item) => {
+                const { quantity, name, setCode } = item;
+                strNotFound += `${quantity} ${name} (${setCode})\n`;
+            });
+            strNotFound += "---The list below was found---\n";
+            results.forEach((item) => {
+                const { card, quantity } = item;
+                const { name, setCode } = card;
+                strNotFound += `${quantity} ${name} (${setCode})\n`;
+            });
+            form.setValue("deckList", strNotFound);
+            toast.error("Some cards were not found.");
+        } else {
+            const res = await createDeck({
+                commander,
+                DeckList: results,
+                deckName,
+                userId: user.id,
+            });
+            if (!res) {
+                toast.error("Error creating deck.");
+                isFetching(false);
+                return;
             }
-            isFetching(false);
-        } catch (error) {
-            console.log("Error on the submit", error);
-            isFetching(false);
+            form.setValue("deckList", "");
+            form.setValue("commander", "");
+            form.setValue("deckName", "");
+            toast.success("Deck created successfully!");
+            router.push(`/decks/${res.deck.id}`);
         }
+        isFetching(false);
     }
     return (
         <Form {...form}>
@@ -82,11 +96,13 @@ export function DeckForm() {
                     name="deckName"
                     render={({ field }) => (
                         <FormItem className="w-full">
+                            <FormLabel className="ml-3">Deck Name</FormLabel>
                             <FormControl>
                                 <Input
                                     className="w-full"
                                     {...field}
-                                    placeholder="Deck Name"
+                                    placeholder="Awesome Deck"
+                                    disabled={fetching}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -98,11 +114,13 @@ export function DeckForm() {
                     name="commander"
                     render={({ field }) => (
                         <FormItem className="w-full">
+                            <FormLabel className="ml-3">Commander</FormLabel>
                             <FormControl>
                                 <Input
                                     className="w-full"
                                     {...field}
-                                    placeholder="Commander"
+                                    placeholder="The Scarab God"
+                                    disabled={fetching}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -114,12 +132,14 @@ export function DeckForm() {
                     name="deckList"
                     render={({ field }) => (
                         <FormItem className="w-full">
+                            <FormLabel className="ml-3">Deck List</FormLabel>
                             <FormControl>
                                 <Textarea
                                     rows={50}
-                                    placeholder="1x The Scarab God (hou) // use this format"
+                                    placeholder="1 The Scarab God (hou) // use this format"
                                     className="h-96"
                                     {...field}
+                                    disabled={fetching}
                                 />
                             </FormControl>
                             <FormMessage />

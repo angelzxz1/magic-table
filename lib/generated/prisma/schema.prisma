@@ -48,23 +48,25 @@ model Card {
   secondManaCost String?
   setCode        String
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  decks     DeckCard[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  decks       DeckCard[]
+  commanderOf Deck[]     @relation("CardAsCommander")
 
   @@unique([name, setCode])
 }
 
 model Deck {
-  id        String     @id @default(cuid())
-  name      String
-  userId    String
-  commander String
-  isPublic  Boolean    @default(false)
-  user      User       @relation(fields: [userId], references: [id])
-  cards     DeckCard[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  name        String
+  userId      String
+  isPublic    Boolean    @default(false)
+  user        User       @relation(fields: [userId], references: [id])
+  cards       DeckCard[]
+  commanderId String
+  commander   Card       @relation("CardAsCommander", fields: [commanderId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model DeckCard {
