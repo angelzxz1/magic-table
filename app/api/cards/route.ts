@@ -17,6 +17,7 @@ type jsonData = {
     secondManaCost: string;
     setCode: string;
     typeLine: string;
+    artCropUrl: string;
 };
 
 export const GET = async (req: NextRequest) => {
@@ -55,6 +56,7 @@ export const POST = async (req: NextRequest) => {
             secondUrl,
             setCode,
             typeLine,
+            artCropUrl,
         } = (await req.json()) as jsonData;
         if (!imgUrl)
             return new NextResponse("Img url is required", { status: 400 });
@@ -65,6 +67,10 @@ export const POST = async (req: NextRequest) => {
             return new NextResponse("Set Code is required", { status: 400 });
         if (!typeLine)
             return new NextResponse("Type line is required", { status: 400 });
+        if (!artCropUrl)
+            return new NextResponse("Art crop URL is required", {
+                status: 400,
+            });
         const existingCard = await db.card.findUnique({
             where: {
                 scryfallId,
@@ -84,6 +90,7 @@ export const POST = async (req: NextRequest) => {
                 secondManaCost: secondManaCost ? secondManaCost : "",
                 setCode,
                 typeLine,
+                artCropUrl,
             },
         });
 

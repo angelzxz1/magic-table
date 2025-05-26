@@ -101,7 +101,7 @@ const addCardToDB = async ({
             type_line,
         } = response.data;
         if (!card_faces) {
-            const { large } = image_uris;
+            const { large, art_crop } = image_uris;
             const typeLine = getLastTypeWord(type_line);
             if (!typeLine) {
                 console.error("Error with the type line: ", type_line);
@@ -120,6 +120,7 @@ const addCardToDB = async ({
                 manaCost: mana_cost,
                 setCode,
                 typeLine,
+                artCropUrl: art_crop,
             });
             const { card }: DecksResponse = addedCardRes.data;
             return { card, quantity };
@@ -142,7 +143,7 @@ const addCardToDB = async ({
                 };
             }
             const { image_uris: f2_Uris, manaCost: mc2 } = face2;
-            const { large: f1_large } = f1_Uris;
+            const { large: f1_large, art_crop } = f1_Uris;
             const { large: f2_large } = f2_Uris;
             const addedCardRes = await axios.post("/api/cards", {
                 imgUrl: f1_large,
@@ -153,6 +154,7 @@ const addCardToDB = async ({
                 secondManaCost: mc2,
                 setCode,
                 typeLine,
+                artCropUrl: art_crop,
             });
             const { card }: DecksResponse = addedCardRes.data;
             return { card, quantity };

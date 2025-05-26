@@ -81,7 +81,7 @@ export function DeckForm() {
             form.setValue("commander", "");
             form.setValue("deckName", "");
             toast.success("Deck created successfully!");
-            router.push(`/decks/${res.deck.id}`);
+            router.push(`/${user.username}/decks/${res.deck.id}`);
         }
         isFetching(false);
     }

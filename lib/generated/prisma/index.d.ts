@@ -3571,6 +3571,7 @@ export namespace Prisma {
     secondUrl: string | null
     secondManaCost: string | null
     setCode: string | null
+    artCropUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3585,6 +3586,7 @@ export namespace Prisma {
     secondUrl: string | null
     secondManaCost: string | null
     setCode: string | null
+    artCropUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3599,6 +3601,7 @@ export namespace Prisma {
     secondUrl: number
     secondManaCost: number
     setCode: number
+    artCropUrl: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3615,6 +3618,7 @@ export namespace Prisma {
     secondUrl?: true
     secondManaCost?: true
     setCode?: true
+    artCropUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3629,6 +3633,7 @@ export namespace Prisma {
     secondUrl?: true
     secondManaCost?: true
     setCode?: true
+    artCropUrl?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3643,6 +3648,7 @@ export namespace Prisma {
     secondUrl?: true
     secondManaCost?: true
     setCode?: true
+    artCropUrl?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3730,6 +3736,7 @@ export namespace Prisma {
     secondUrl: string | null
     secondManaCost: string | null
     setCode: string
+    artCropUrl: string
     createdAt: Date
     updatedAt: Date
     _count: CardCountAggregateOutputType | null
@@ -3761,6 +3768,7 @@ export namespace Prisma {
     secondUrl?: boolean
     secondManaCost?: boolean
     setCode?: boolean
+    artCropUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     decks?: boolean | Card$decksArgs<ExtArgs>
@@ -3778,6 +3786,7 @@ export namespace Prisma {
     secondUrl?: boolean
     secondManaCost?: boolean
     setCode?: boolean
+    artCropUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3792,6 +3801,7 @@ export namespace Prisma {
     secondUrl?: boolean
     secondManaCost?: boolean
     setCode?: boolean
+    artCropUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["card"]>
@@ -3806,11 +3816,12 @@ export namespace Prisma {
     secondUrl?: boolean
     secondManaCost?: boolean
     setCode?: boolean
+    artCropUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "setCode" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
+  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scryfallId" | "name" | "manaCost" | "typeLine" | "imgUrl" | "secondUrl" | "secondManaCost" | "setCode" | "artCropUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["card"]>
   export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | Card$decksArgs<ExtArgs>
     commanderOf?: boolean | Card$commanderOfArgs<ExtArgs>
@@ -3835,6 +3846,7 @@ export namespace Prisma {
       secondUrl: string | null
       secondManaCost: string | null
       setCode: string
+      artCropUrl: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["card"]>
@@ -4271,6 +4283,7 @@ export namespace Prisma {
     readonly secondUrl: FieldRef<"Card", 'String'>
     readonly secondManaCost: FieldRef<"Card", 'String'>
     readonly setCode: FieldRef<"Card", 'String'>
+    readonly artCropUrl: FieldRef<"Card", 'String'>
     readonly createdAt: FieldRef<"Card", 'DateTime'>
     readonly updatedAt: FieldRef<"Card", 'DateTime'>
   }
@@ -6986,6 +6999,7 @@ export namespace Prisma {
     secondUrl: 'secondUrl',
     secondManaCost: 'secondManaCost',
     setCode: 'setCode',
+    artCropUrl: 'artCropUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7257,6 +7271,7 @@ export namespace Prisma {
     secondUrl?: StringNullableFilter<"Card"> | string | null
     secondManaCost?: StringNullableFilter<"Card"> | string | null
     setCode?: StringFilter<"Card"> | string
+    artCropUrl?: StringFilter<"Card"> | string
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
@@ -7273,6 +7288,7 @@ export namespace Prisma {
     secondUrl?: SortOrderInput | SortOrder
     secondManaCost?: SortOrderInput | SortOrder
     setCode?: SortOrder
+    artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     decks?: DeckCardOrderByRelationAggregateInput
@@ -7293,6 +7309,7 @@ export namespace Prisma {
     secondUrl?: StringNullableFilter<"Card"> | string | null
     secondManaCost?: StringNullableFilter<"Card"> | string | null
     setCode?: StringFilter<"Card"> | string
+    artCropUrl?: StringFilter<"Card"> | string
     createdAt?: DateTimeFilter<"Card"> | Date | string
     updatedAt?: DateTimeFilter<"Card"> | Date | string
     decks?: DeckCardListRelationFilter
@@ -7309,6 +7326,7 @@ export namespace Prisma {
     secondUrl?: SortOrderInput | SortOrder
     secondManaCost?: SortOrderInput | SortOrder
     setCode?: SortOrder
+    artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CardCountOrderByAggregateInput
@@ -7329,6 +7347,7 @@ export namespace Prisma {
     secondUrl?: StringNullableWithAggregatesFilter<"Card"> | string | null
     secondManaCost?: StringNullableWithAggregatesFilter<"Card"> | string | null
     setCode?: StringWithAggregatesFilter<"Card"> | string
+    artCropUrl?: StringWithAggregatesFilter<"Card"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
   }
@@ -7616,6 +7635,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardCreateNestedManyWithoutCardInput
@@ -7632,6 +7652,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
@@ -7648,6 +7669,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUpdateManyWithoutCardNestedInput
@@ -7664,6 +7686,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
@@ -7680,6 +7703,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7694,6 +7718,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7708,6 +7733,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8019,6 +8045,7 @@ export namespace Prisma {
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
     setCode?: SortOrder
+    artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8033,6 +8060,7 @@ export namespace Prisma {
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
     setCode?: SortOrder
+    artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8047,6 +8075,7 @@ export namespace Prisma {
     secondUrl?: SortOrder
     secondManaCost?: SortOrder
     setCode?: SortOrder
+    artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8969,6 +8998,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardCreateNestedManyWithoutCardInput
@@ -8984,6 +9014,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCardUncheckedCreateNestedManyWithoutCardInput
@@ -9070,6 +9101,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUpdateManyWithoutCardNestedInput
@@ -9085,6 +9117,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckCardUncheckedUpdateManyWithoutCardNestedInput
@@ -9125,6 +9158,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     commanderOf?: DeckCreateNestedManyWithoutCommanderInput
@@ -9140,6 +9174,7 @@ export namespace Prisma {
     secondUrl?: string | null
     secondManaCost?: string | null
     setCode: string
+    artCropUrl: string
     createdAt?: Date | string
     updatedAt?: Date | string
     commanderOf?: DeckUncheckedCreateNestedManyWithoutCommanderInput
@@ -9202,6 +9237,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     commanderOf?: DeckUpdateManyWithoutCommanderNestedInput
@@ -9217,6 +9253,7 @@ export namespace Prisma {
     secondUrl?: NullableStringFieldUpdateOperationsInput | string | null
     secondManaCost?: NullableStringFieldUpdateOperationsInput | string | null
     setCode?: StringFieldUpdateOperationsInput | string
+    artCropUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     commanderOf?: DeckUncheckedUpdateManyWithoutCommanderNestedInput

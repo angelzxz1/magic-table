@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Session } from "@/lib/generated/prisma";
 
 export const sessionSlice = createSlice({
-    name: "user",
+    name: "session",
     initialState: {
         session: null as Session | null,
     },

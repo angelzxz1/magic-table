@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { add } from "@/store/features/decks/decksSlice";
+import { add, DeckListType } from "@/store/features/decks/decksSlice";
 import { Deck } from "@/lib/generated/prisma";
 
 type DecksResponse = {
     message: string;
-    decks: Deck[];
+    decks: DeckListType[];
 };
 export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
+    let loads = 0;
     // const [isSession, setIsSession] = useState<boolean>(false);
     const [deckFetched, setDeckFetched] = useState<boolean>(false);
     const dispatch = useAppDispatch();
@@ -19,6 +20,8 @@ export const DeckProvider = ({ children }: { children: React.ReactNode }) => {
     // const { user } = useAppSelector((state) => state.user);
     useEffect(() => {
         async function getDeckList() {
+            loads++;
+            console.log("Decks loads: ", loads);
             try {
                 const res = await fetch("/api/decks");
 

@@ -38,8 +38,8 @@ model Session {
 }
 
 model Card {
-  id             String  @id @default(cuid())
-  scryfallId     String  @unique
+  id             String     @id @default(cuid())
+  scryfallId     String     @unique
   name           String
   manaCost       String?
   typeLine       String?
@@ -47,11 +47,11 @@ model Card {
   secondUrl      String?
   secondManaCost String?
   setCode        String
-
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  decks       DeckCard[]
-  commanderOf Deck[]     @relation("CardAsCommander")
+  artCropUrl     String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  decks          DeckCard[]
+  commanderOf    Deck[]     @relation("CardAsCommander")
 
   @@unique([name, setCode])
 }

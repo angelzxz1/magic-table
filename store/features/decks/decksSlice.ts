@@ -1,20 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Deck } from "@/lib/generated/prisma";
+import { Card, Deck } from "@/lib/generated/prisma";
 
+export interface DeckListType extends Deck {
+    commander: Card;
+}
 export const deckSlice = createSlice({
-    name: "user",
+    name: "decks",
     initialState: {
-        deckList: [] as Deck[],
+        deckInfo: [] as DeckListType[],
     },
     reducers: {
-        add: (state, action: PayloadAction<Deck>) => {
-            state.deckList.push(action.payload);
+        add: (state, action: PayloadAction<DeckListType>) => {
+            // Check if the deck already exists
+            const existingDeck = state.deckInfo.find(
+                (deck) => deck.id === action.payload.id
+            );
+            // If it exists, do not add it again
+            if (existingDeck) {
+                console.warn(
+                    `Deck with ID ${action.payload.id} already exists. Not adding again.`
+                );
+                return;
+            }
+            state.deckInfo.push(action.payload);
         },
         remove: (state, action: PayloadAction<string>) => {
-            const newList = state.deckList.filter(
+            const newList = state.deckInfo.filter(
                 (deck) => deck.id !== action.payload
             );
-            state.deckList = newList;
+            state.deckInfo = newList;
         },
     },
 });
