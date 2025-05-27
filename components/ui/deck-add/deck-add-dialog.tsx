@@ -19,7 +19,9 @@ export function AddNewDeck() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Add New Deck</Button>
+                <Button variant="outline" className="cursor-pointer">
+                    Add New Deck
+                </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>

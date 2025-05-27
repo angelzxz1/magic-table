@@ -5,11 +5,15 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import Image from "next/image";
 const ShowDeck = ({ deck }: { deck: DeckListType }) => {
     return (
-        <div className="w-72 h-72 relative overflow-hidden rounded-md flex justify-between items-center">
-            <div className="absolute h-full w-full hover:backdrop-blur-sm transition-all duration-200 ease-in-out flex justify-center items-center">
-                <div>
-                    {deck.name.charAt(0).toUpperCase() +
-                        deck.name.slice(1).toLowerCase()}
+        <div className="w-72 h-72 relative overflow-hidden rounded-md flex justify-between items-center select-none">
+            <div className="cursor-pointer absolute z-20 peer h-full w-full hover:backdrop-blur-sm transition-all duration-200 ease-in-out flex justify-end items-end group bg-neutral-900/40">
+                <div className="group-hover:opacity-100 opacity-0 transition-all duration-300 ease-in-out font-black p-2 ">
+                    <div className="">
+                        Deck name:{" "}
+                        {deck.name.charAt(0).toUpperCase() +
+                            deck.name.slice(1).toLowerCase()}
+                    </div>
+                    <div>Commander: {deck.commander.name}</div>
                 </div>
             </div>
             <Image
@@ -17,7 +21,7 @@ const ShowDeck = ({ deck }: { deck: DeckListType }) => {
                 src={deck.commander.artCropUrl}
                 width={288}
                 height={288}
-                className="object-cover w-full h-full hover:scale-105 transition-all duration-300 ease-in-out "
+                className="object-cover w-full h-full peer-hover:scale-125 peer-active:scale-105 transition-all duration-200 ease-in-out z-10"
             />
         </div>
     );
@@ -26,8 +30,11 @@ const ShowDeck = ({ deck }: { deck: DeckListType }) => {
 const Decks = () => {
     const { deckInfo } = useAppSelector((state) => state.decks);
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="w-full flex-1 mt-8">
+        <div className="w-full h-full flex">
+            <div className="w-full flex-1 pt-8 gap-8 flex flex-col">
+                <div className="w-full">
+                    <AddNewDeck />
+                </div>
                 {deckInfo.length !== 0 ? (
                     <div>
                         {deckInfo.map((item) => {
