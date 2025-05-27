@@ -32,16 +32,18 @@ const Decks = () => {
     return (
         <div className="w-full h-full flex">
             <div className="w-full flex-1 pt-8 gap-8 flex flex-col">
-                <div className="w-full">
-                    <AddNewDeck />
-                </div>
                 {deckInfo.length !== 0 ? (
-                    <div>
-                        {deckInfo.map((item) => {
-                            const { id } = item;
-                            return <ShowDeck key={id} deck={item} />;
-                        })}
-                    </div>
+                    <>
+                        <div className="w-full">
+                            <AddNewDeck />
+                        </div>
+                        <div>
+                            {deckInfo.map((item) => {
+                                const { id } = item;
+                                return <ShowDeck key={id} deck={item} />;
+                            })}
+                        </div>
+                    </>
                 ) : (
                     <div className="w-full h-full flex justify-center items-center">
                         <AddNewDeck />
