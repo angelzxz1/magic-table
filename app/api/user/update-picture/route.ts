@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+import { removePassword } from "@/lib/utils";
 type jsonData = {
     pictureUrl: string;
     thumbnailUrl: string;
@@ -30,9 +31,13 @@ export const POST = async (req: NextRequest) => {
         if (!updatedUser) {
             return new NextResponse("User not found", { status: 404 });
         }
+        const userWithoutPassword = removePassword(updatedUser)[0];
         return NextResponse.json(
-            { message: "User updated", user: updatedUser },
+            { message: "User updated", user: userWithoutPassword },
             { status: 200 }
         );
-    } catch (error) {}
+    } catch (error) {
+        console.error("Error updating user picture:", error);
+        return new NextResponse("Internal server error", { status: 500 });
+    }
 };

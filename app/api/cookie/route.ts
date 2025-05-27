@@ -4,6 +4,7 @@ import {
     verifyJwt,
 } from "@/api-libs/services/user.service";
 import { User } from "@/lib/generated/prisma";
+import { removePassword } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -43,8 +44,3 @@ export async function GET() {
         userWOP,
     });
 }
-
-const removePassword = (user: User) => {
-    const { password, ...userWOP } = user;
-    return [userWOP, password];
-};

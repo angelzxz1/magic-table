@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Loader } from "lucide-react";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { add, DeckListType } from "@/store/features/decks/decksSlice";
-import { Deck } from "@/lib/generated/prisma";
 
 type DecksResponse = {
     message: string;

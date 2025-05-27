@@ -4,7 +4,7 @@ import {
     generateToken,
     verifyPassword,
 } from "@/api-libs/services/user.service";
-import { cookies } from "next/headers";
+import { removePassword } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 type jsonData = {
     email: string;
@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest) => {
             return new NextResponse("Session not created", { status: 500 });
 
         const token = generateToken(user.id, session.id);
-        const { password: _, ...userWithoutPassword } = user;
+        const userWithoutPassword = removePassword(user)[0];
 
         const res = NextResponse.json({
             message: "Login successful",

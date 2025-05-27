@@ -17,7 +17,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Eye, EyeOff, Loader, Save } from "lucide-react";
-import { User } from "@/lib/generated/prisma";
 import { useAppDispatch } from "@/store/hooks";
 import { setUser, UserWithoutPassword } from "@/store/features/user/userSlice";
 import { cn } from "@/lib/utils";
@@ -84,7 +83,7 @@ export function ChangePassword() {
             dispatch(setUser(data.user));
             router.refresh();
             toast.success("Password updated successfully");
-        } catch (error: any) {
+        } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message =
                     error.response?.data?.message ||

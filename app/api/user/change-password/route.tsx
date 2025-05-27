@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { verifySession } from "../../session-verify";
 import { hashPassword, verifyPassword } from "@/api-libs/services/user.service";
 import { UserWithoutPassword } from "@/store/features/user/userSlice";
+import { removePassword } from "@/lib/utils";
 type jsonData = {
     currentPassword: string;
     newPassword: string;
@@ -64,7 +65,7 @@ export const POST = async (req: NextRequest) => {
                 { status: 500 }
             );
         }
-        const { password, ...userWithoutPassword } = updatedUser;
+        const userWithoutPassword = removePassword(updatedUser)[0];
 
         return NextResponse.json(
             {

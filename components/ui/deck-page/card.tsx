@@ -1,5 +1,5 @@
 "use client";
-import { Minus, Plus, RefreshCw, X } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { Button } from "../button";
 import Image from "next/image";
 import { useState } from "react";

@@ -6,7 +6,6 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setSession } from "@/store/features/session/sessionSlice";
 import { setUser } from "@/store/features/user/userSlice";
 export const CheckSession = ({ children }: { children: React.ReactNode }) => {
-    // const [isSession, setIsSession] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const session = useAppSelector((state) => state.session.session);
     useEffect(() => {
@@ -19,14 +18,10 @@ export const CheckSession = ({ children }: { children: React.ReactNode }) => {
                 const data = await res.json();
                 dispatch(setSession(data.session));
                 dispatch(setUser(data.user));
-                // setIsSession(true);
             }
         }
         if (!session) {
             fetchCookie();
-        } else {
-            // console.log("Session already exists, no need to fetch cookie");
-            // setIsSession(true);
         }
     }, []);
 

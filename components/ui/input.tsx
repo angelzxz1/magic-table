@@ -20,7 +20,6 @@ const inputVarinats = cva(
 );
 
 function Input({
-    size,
     className,
     type,
     variant,

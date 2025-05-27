@@ -99,7 +99,7 @@ export function LoginForm() {
                     </div>
                     <div className="w-full flex justify-end">
                         <p className="text-sm text-muted-foreground text-center">
-                            Don't have an account?{"  "}
+                            Don&apos;t have an account?{"  "}
                             <Link
                                 href="/register"
                                 className="text-sm text-blue-500 hover:underline"

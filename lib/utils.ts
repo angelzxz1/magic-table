@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
-import type { Card as CardDB, Deck } from "./generated/prisma";
+import type { Card as CardDB, Deck, User } from "./generated/prisma";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -247,3 +247,7 @@ export function getLastTypeWord(text: string): string | null {
     const words = beforeDash.split(/\s+/); // divide en palabras
     return words.length > 0 ? words[words.length - 1] : null;
 }
+export const removePassword = (user: User) => {
+    const { password, ...userWOP } = user;
+    return [userWOP, password];
+};

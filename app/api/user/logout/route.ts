@@ -1,6 +1,6 @@
 // /api/logout/route.ts
 
-import { matchSession, verifyJwt } from "@/api-libs/services/user.service";
+import { verifyJwt } from "@/api-libs/services/user.service";
 import { db } from "@/lib/db";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
