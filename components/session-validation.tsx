@@ -16,12 +16,14 @@ export const CheckSession = ({ children }: { children: React.ReactNode }) => {
                 redirect("/login");
             } else {
                 const data = await res.json();
+                console.log("Session data:", data);
                 dispatch(setSession(data.session));
-                dispatch(setUser(data.user));
+                dispatch(setUser(data.userWOP));
             }
         }
         if (!session) {
             fetchCookie();
+            console.log("a ber");
         }
     }, []);
 
