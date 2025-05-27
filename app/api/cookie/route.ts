@@ -3,7 +3,6 @@ import {
     matchSession,
     verifyJwt,
 } from "@/api-libs/services/user.service";
-import { User } from "@/lib/generated/prisma";
 import { removePassword } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
