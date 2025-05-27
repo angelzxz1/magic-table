@@ -3,25 +3,6 @@ import { twMerge } from "tailwind-merge";
 import axios from "axios";
 import type { Card as CardDB, Deck } from "./generated/prisma";
 
-type DataNeded = {
-    color_identity: string[];
-    colors: string[];
-    game_changer: boolean;
-    id: string;
-    image_uris: {
-        art_crop: string;
-        border_crop: string;
-        large: string;
-        normal: string;
-        png: string;
-        small: string;
-    };
-    keywords: string[];
-    mana_cost: string;
-    name: string;
-    set: string;
-};
-
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }

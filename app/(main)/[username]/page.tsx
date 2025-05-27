@@ -11,7 +11,7 @@ export default function Page() {
     if (!user) {
         return <></>;
     }
-    const { firstName, lastName, thumbnailUrl, username, email } = user;
+    // const { firstName, lastName, thumbnailUrl, username, email } = user;
     return (
         <div className="w-full h-full flex flex-col items-start ">
             <div className="w-full flex justify-end  bg-neutral-900 p-8 ">

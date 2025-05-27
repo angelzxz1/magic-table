@@ -1,11 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-    createUser,
-    findUserByEmail,
-    findUserById,
-    hashPassword,
-} from "@/api-libs/services/user.service";
-import { User } from "@/lib/generated/prisma";
 import { db } from "@/lib/db";
 
 type jsonData = {

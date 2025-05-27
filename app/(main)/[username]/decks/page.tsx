@@ -1,7 +1,7 @@
 "use client";
 import { AddNewDeck } from "@/components/ui/deck-add/deck-add-dialog";
 import { DeckListType } from "@/store/features/decks/decksSlice";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { useAppSelector } from "@/store/hooks";
 import Image from "next/image";
 const ShowDeck = ({ deck }: { deck: DeckListType }) => {
     return (

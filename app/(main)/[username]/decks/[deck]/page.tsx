@@ -1,7 +1,5 @@
 import { ShowCards } from "@/components/ui/deck-page/show-cards";
 import { db } from "@/lib/db";
-import { Card, Deck } from "@/lib/generated/prisma";
-import axios from "axios";
 
 const DeckPage = async ({ params }: { params: Promise<{ deck: string }> }) => {
     const { deck } = await params;
@@ -9,7 +7,7 @@ const DeckPage = async ({ params }: { params: Promise<{ deck: string }> }) => {
     if (!Mazo) {
         return <div>Deck not found</div>;
     }
-    const { commander, cards } = Mazo;
+    const { cards } = Mazo;
     return (
         <div className="w-full h-full">
             <ShowCards deckList={cards} />
@@ -36,10 +34,9 @@ const getDeck = async (deckId: string) => {
         if (!deckRes) return null;
         return deckRes;
     } catch (e) {
-        console.log("Error finding deck in DB");
+        console.log("Error finding deck in DB: ", e);
         return null;
     }
 };
 
-const getCards = () => {};
 export default DeckPage;

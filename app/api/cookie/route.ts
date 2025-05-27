@@ -3,10 +3,11 @@ import {
     matchSession,
     verifyJwt,
 } from "@/api-libs/services/user.service";
+import { User } from "@/lib/generated/prisma";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET() {
     const cookieStore = await cookies();
     if (!cookieStore)
         return new NextResponse("No cookies found", { status: 404 });
@@ -35,10 +36,15 @@ export async function GET(req: Request) {
         return new NextResponse("Invalid token", { status: 401 });
     const userFound = await findUserById(userId);
     if (!userFound) return new NextResponse("User not found", { status: 404 });
-    const { password, ...user } = userFound;
+    const userWOP = removePassword(userFound)[0];
     return NextResponse.json({
         message: "Token is valid",
         session,
-        user,
+        userWOP,
     });
 }
+
+const removePassword = (user: User) => {
+    const { password, ...userWOP } = user;
+    return [userWOP, password];
+};
