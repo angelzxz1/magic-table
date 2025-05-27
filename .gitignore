@@ -21,7 +21,6 @@
 /build
 
 # generated
-/lib/generated
 
 # misc
 .DS_Store
