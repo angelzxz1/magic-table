@@ -6,18 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint"
-    },
-    "overrides": {
-        "files": [
-            "prisma/generated/**"
-        ],
-        "rules": {
-            "@typescript-eslint/no-explicit-any": "off",
-            "@typescript-eslint/no-require-imports": "off",
-            "@typescript-eslint/no-unused-vars": "off",
-            "@typescript-eslint/no-unused-expressions": "off"
-        }
+        "lint": "eslint ."
     },
     "dependencies": {
         "@edgestore/react": "^0.3.3",
