@@ -187,8 +187,8 @@ export const createDeck = async ({
 }: {
     DeckList: result[];
     userId: string;
-    commander: String;
-    deckName: String;
+    commander: string;
+    deckName: string;
 }) => {
     try {
         const deckRes = await axios.post<{ message: string; deck: Deck }>(
@@ -227,7 +227,7 @@ const findCard = async ({
         if (!card) return null;
         return card;
     } catch (e) {
-        console.log("Error finding card in DB");
+        console.log("Error finding card in DB: ", e);
         return null;
     }
 };
