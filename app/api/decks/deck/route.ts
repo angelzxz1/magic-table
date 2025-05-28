@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import {} from "@/api-libs/services/user.service";
 import { db } from "@/lib/db";
 import { result } from "@/lib/utils";
 type jsonData = {
     userId: string;
     deckName: string;
-    commander: string;
+    commander: result;
     DeckList: result[];
 };
 
@@ -61,18 +60,17 @@ export const POST = async (req: NextRequest) => {
             },
         });
         if (!user) return new NextResponse("User not found", { status: 404 });
-        const commanderCard = DeckList.find(
-            (item) => item.card.name === commander
+        const commanderInList = DeckList.find(
+            (item) => item.card.name === commander.card.name
         );
-        if (!commanderCard)
+        if (commanderInList)
             return new NextResponse(
-                "Commander name not in the list, chech it",
+                "Commander shoulnd not be in the deck list",
                 { status: 404 }
             );
-        console.log("Commander Card: ", commanderCard);
         const deck = await db.deck.create({
             data: {
-                commanderId: commanderCard.card.id,
+                commanderId: commander.card.id,
                 name: deckName,
                 userId,
             },

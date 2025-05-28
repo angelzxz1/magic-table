@@ -11,17 +11,19 @@ export const ShowCards = ({ deckList }: { deckList: deckListType[] }) => {
     const typeLists = generateTypeLists(cardList, typeLines);
     console.log("Type lists:", typeLists);
     return (
-        <div className="flex flex-col h-full w-full">
-            <div className="flex h-full w-full justify-between items-center mt-4">
+        <div className="flex flex-col w-full ">
+            <div className="flex w-full justify-between items-start mt-4 pt-4 gap-2 bg-neutral-800 px-4 rounded-md border border-neutral-700 pb-64">
                 {Object.entries(typeLists).map(([typeLine, cards]) => {
                     return (
                         <div
                             key={typeLine}
                             className="flex flex-col gap-2 h-full w-full "
                         >
-                            <h2 className="text-lg font-bold w-full flex justify-center">
-                                {typeLine.charAt(0).toUpperCase() +
-                                    typeLine.slice(1).toLowerCase()}
+                            <h2 className="font-bold w-full ml-2">
+                                {`${
+                                    typeLine.charAt(0).toUpperCase() +
+                                    typeLine.slice(1).toLowerCase()
+                                }: ${cards.length}`}
                             </h2>
                             <div className="h-full w-full">
                                 {cards.map((cardData) => {

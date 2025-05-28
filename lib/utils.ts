@@ -15,6 +15,22 @@ export type Card = {
     name: string;
     setCode: string;
 };
+export const parseCardName = (cardName: string): Card | null => {
+    const unnecessarySpaces = cardName.trim();
+    const match = unnecessarySpaces.match(/^(\d+)\s+(.+)\s+\((\w+)\)$/);
+    console.log("Match: ", match);
+    if (!match) {
+        console.error(`Invalid card format: "${cardName}"`);
+        return null;
+    }
+    const [, quantity, name, setCode] = match;
+    return {
+        quantity: parseInt(quantity),
+        name,
+        setCode,
+    };
+};
+
 export const parseDeckList = (input: string): Card[] => {
     return input
         .split("\n")
@@ -71,7 +87,6 @@ const addCardToDB = async ({
     const url = `https://api.scryfall.com/cards/named?fuzzy=${encodedName}&set=${setCode}`;
     try {
         const response = await axios.get(url);
-
         const {
             mana_cost,
             image_uris,
@@ -151,29 +166,63 @@ const addCardToDB = async ({
         };
     }
 };
-export async function fetchCardData(cards: Card[]): Promise<fetchCardDataType> {
+
+export const fetchCard = async (card: Card): Promise<result | null> => {
+    const { name, quantity, setCode } = card;
+    const cardInDB = await findCard({ name, setCode });
+    if (!cardInDB) {
+        const cardToAdd = await addCardToDB({ name, setCode, quantity });
+        await sleep(50);
+        if ("error" in cardToAdd) {
+            return null;
+        } else {
+            return cardToAdd as result;
+        }
+    } else {
+        // Si la carta ya existe en la base de datos, simplemente la agregamos a los resultados
+        const cardInDBWithQuantity = {
+            card: cardInDB,
+            quantity,
+        } as result;
+        return cardInDBWithQuantity;
+    }
+};
+
+export async function fetchCards(cards: Card[]): Promise<fetchCardDataType> {
     const results: result[] = [];
     const notFound: notFoundType[] = [];
     for (const cardItem of cards) {
-        const { name, quantity, setCode } = cardItem;
-        const cardInDB = await findCard({ name, setCode });
-        if (!cardInDB) {
-            const cardToAdd = await addCardToDB({ name, setCode, quantity });
-            if (Object.keys(cardToAdd).includes("error")) {
-                notFound.push(cardToAdd as notFoundType);
-            } else {
-                results.push(cardToAdd as result);
-            }
-            // Esperar 100 ms antes de continuar
-            await sleep(50);
+        const card = await fetchCard(cardItem);
+        if (!card) {
+            notFound.push({
+                quantity: cardItem.quantity,
+                name: cardItem.name,
+                setCode: cardItem.setCode,
+                error: true,
+                data: null,
+            } as notFoundType);
         } else {
-            // Si la carta ya existe en la base de datos, simplemente la agregamos a los resultados
-            const cardInDBWithQuantity = {
-                card: cardInDB,
-                quantity,
-            };
-            results.push(cardInDBWithQuantity);
+            results.push(card as result);
         }
+        // const { name, quantity, setCode } = cardItem;
+        // const cardInDB = await findCard({ name, setCode });
+        // if (!cardInDB) {
+        //     const cardToAdd = await addCardToDB({ name, setCode, quantity });
+        //     if (Object.keys(cardToAdd).includes("error")) {
+        //         notFound.push(cardToAdd as notFoundType);
+        //     } else {
+        //         results.push(cardToAdd as result);
+        //     }
+        //     // Esperar 100 ms antes de continuar
+        //     await sleep(50);
+        // } else {
+        //     // Si la carta ya existe en la base de datos, simplemente la agregamos a los resultados
+        //     const cardInDBWithQuantity = {
+        //         card: cardInDB,
+        //         quantity,
+        //     };
+        //     results.push(cardInDBWithQuantity);
+        // }
     }
 
     return { results, notFound };
@@ -187,7 +236,7 @@ export const createDeck = async ({
 }: {
     DeckList: result[];
     userId: string;
-    commander: string;
+    commander: result;
     deckName: string;
 }) => {
     try {

@@ -13,7 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createDeck, fetchCardData, parseDeckList } from "@/lib/utils";
+import {
+    createDeck,
+    fetchCard,
+    fetchCards,
+    parseCardName,
+    parseDeckList,
+} from "@/lib/utils";
 import { useState } from "react";
 import { Import, Loader } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
@@ -45,9 +51,21 @@ export function DeckForm() {
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
         isFetching(true);
-        const { commander, deckName } = values;
-        const decklist = parseDeckList(values.deckList);
-        const { notFound, results } = await fetchCardData(decklist);
+        const { commander, deckName, deckList } = values;
+        const formatedCommander = parseCardName(commander);
+        if (!formatedCommander) {
+            toast.error("Invalid commander format.");
+            isFetching(false);
+            return;
+        }
+        const fetchedCommaner = await fetchCard(formatedCommander);
+        if (!fetchedCommaner) {
+            toast.error("Commander not found.");
+            isFetching(false);
+            return;
+        }
+        const decklist = parseDeckList(deckList);
+        const { notFound, results } = await fetchCards(decklist);
 
         if (notFound.length > 0) {
             form.setValue("deckList", "");
@@ -66,7 +84,7 @@ export function DeckForm() {
             toast.error("Some cards were not found.");
         } else {
             const res = await createDeck({
-                commander,
+                commander: fetchedCommaner,
                 DeckList: results,
                 deckName,
                 userId: user.id,
@@ -118,7 +136,7 @@ export function DeckForm() {
                                 <Input
                                     className="w-full"
                                     {...field}
-                                    placeholder="The Scarab God"
+                                    placeholder="1 The Scarab God (hou) "
                                     disabled={fetching}
                                 />
                             </FormControl>
@@ -131,11 +149,11 @@ export function DeckForm() {
                     name="deckList"
                     render={({ field }) => (
                         <FormItem className="w-full">
-                            <FormLabel className="ml-3">Deck List</FormLabel>
+                            <FormLabel className="ml-3">The 99 List</FormLabel>
                             <FormControl>
                                 <Textarea
                                     rows={50}
-                                    placeholder="1 The Scarab God (hou) // use this format"
+                                    placeholder="6 Swamp (hou) // use this format"
                                     className="h-96"
                                     {...field}
                                     disabled={fetching}

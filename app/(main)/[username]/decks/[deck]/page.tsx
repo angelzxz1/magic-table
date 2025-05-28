@@ -9,7 +9,7 @@ const DeckPage = async ({ params }: { params: Promise<{ deck: string }> }) => {
     }
     const { cards } = Mazo;
     return (
-        <div className="w-full h-full">
+        <div className="w-full">
             <ShowCards deckList={cards} />
         </div>
     );
