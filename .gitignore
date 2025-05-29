@@ -20,7 +20,8 @@
 # production
 /build
 
-# generated
+# local development
+ser.ts
 
 # misc
 .DS_Store

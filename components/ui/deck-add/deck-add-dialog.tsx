@@ -10,13 +10,14 @@ import {
 } from "@/components/ui/dialog";
 import { DeckForm } from "./import-deck-form";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 
 export function AddNewDeck() {
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline" className="cursor-pointer">
-                    Add New Deck
+                    Add New Deck <Plus />
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">

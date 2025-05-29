@@ -77,3 +77,11 @@ model DeckCard {
   cardId String
   count  Int    @default(1) // cantidad de copias
 }
+
+model GameTable {
+  id        String   @id @default(cuid())
+  name      String
+  status    String   @default("open") // "open", "in_progress", "finished"
+  players   String[] // Puedes usar esto para guardar los user IDs
+  createdAt DateTime @default(now())
+}

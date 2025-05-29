@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
                     <DeckProvider>
                         <NavBar />
                         <div className=" w-full flex h-full justify-center items-center ">
-                            <div className=" max-w-[100rem] w-full h-full">
+                            <div className="max-w-[100rem] w-full h-full">
                                 {children}
                             </div>
                         </div>

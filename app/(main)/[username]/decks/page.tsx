@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { AddNewDeck } from "@/components/ui/deck-add/deck-add-dialog";
 import { add, remove, DeckListType } from "@/store/features/decks/decksSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RefreshCcw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -100,7 +100,7 @@ const Refresh = () => {
                 }
             }}
         >
-            <RefreshCcw className={loading ? "animate-spin" : ""} />
+            Refresh <RefreshCw className={loading ? "animate-spin" : ""} />
         </Button>
     );
 };
@@ -108,7 +108,7 @@ const Refresh = () => {
 const Decks = () => {
     const { deckInfo } = useAppSelector((state) => state.decks);
     return (
-        <div className="w-full h-full flex">
+        <div className="w-full h-full flex ">
             <div className="w-full flex-1 pt-8 gap-8 flex flex-col">
                 {deckInfo.length !== 0 ? (
                     <>
@@ -116,7 +116,7 @@ const Decks = () => {
                             <AddNewDeck />
                             <Refresh />
                         </div>
-                        <div className="flex gap-4 bg-neutral-800 p-4 rounded-md flex-wrap min-h-full">
+                        <div className="flex gap-4 bg-neutral-800 p-4 rounded-md flex-wrap min-h-4/5">
                             {deckInfo.map((item) => {
                                 const { id } = item;
                                 return <ShowDeck key={id} deck={item} />;
