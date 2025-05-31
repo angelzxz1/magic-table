@@ -1,6 +1,6 @@
 "use client";
 
-import { Cog, LogOut, MenuIcon, PackageOpen, User } from "lucide-react";
+import { Cog, House, LogOut, MenuIcon, PackageOpen, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
@@ -41,7 +41,7 @@ const Circle = ({
                 onClick={onClick}
             >
                 <Link
-                    className="border-1 border-white rounded-full p-2 cursor-pointer bg-black flex items-center justify-evenly hover:w-28 group"
+                    className="border-1 border-neutral-700 rounded-full p-2 cursor-pointer bg-neutral-950 flex items-center justify-evenly hover:w-28 group"
                     href={`${href}`}
                 >
                     {children}
@@ -55,7 +55,7 @@ const Circle = ({
             className="absolute right-0 top-0 flex items-center justify-center"
             onClick={onClick}
         >
-            <div className="border-1 border-white rounded-full p-2 cursor-pointer bg-black flex items-center justify-evenly">
+            <div className="border-1 border-neutral-700 rounded-full p-2 cursor-pointer bg-neutral-950 flex items-center justify-evenly">
                 {children}
             </div>
         </div>
@@ -106,9 +106,13 @@ export const NavBar = () => {
     return (
         <div className="fixed top-5 right-5 z-50 rounded-full">
             <nav className="relative w-10 h-10 " ref={navRef}>
+                <Circle show={show} top="top-0" text="Home" href={`/`}>
+                    <House />
+                </Circle>
                 <Circle
                     show={show}
-                    top="top-0"
+                    top="top-12"
+                    index={1}
                     text="Profile"
                     href={`/${user?.username}`}
                 >
@@ -116,8 +120,8 @@ export const NavBar = () => {
                 </Circle>
                 <Circle
                     show={show}
-                    top="top-12"
-                    index={1}
+                    top="top-24"
+                    index={2}
                     text="Decks"
                     href={`/${user?.username}/decks`}
                 >
@@ -125,8 +129,8 @@ export const NavBar = () => {
                 </Circle>
                 <Circle
                     show={show}
-                    top="top-24"
-                    index={2}
+                    top="top-36"
+                    index={3}
                     text="Settings"
                     href="/settings"
                 >
@@ -134,8 +138,8 @@ export const NavBar = () => {
                 </Circle>
                 <Circle
                     show={show}
-                    top="top-36"
-                    index={3}
+                    top="top-48"
+                    index={4}
                     text="Log Out"
                     onClick={handleLogout}
                 >

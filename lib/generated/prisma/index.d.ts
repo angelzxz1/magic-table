@@ -1431,6 +1431,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type GameTableCountOutputType
+   */
+
+  export type GameTableCountOutputType = {
+    players: number
+  }
+
+  export type GameTableCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    players?: boolean | GameTableCountOutputTypeCountPlayersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GameTableCountOutputType without action
+   */
+  export type GameTableCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameTableCountOutputType
+     */
+    select?: GameTableCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GameTableCountOutputType without action
+   */
+  export type GameTableCountOutputTypeCountPlayersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -1455,6 +1486,7 @@ export namespace Prisma {
     thumbnailUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    gameTableId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1468,6 +1500,7 @@ export namespace Prisma {
     thumbnailUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    gameTableId: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1481,6 +1514,7 @@ export namespace Prisma {
     thumbnailUrl: number
     createdAt: number
     updatedAt: number
+    gameTableId: number
     _all: number
   }
 
@@ -1496,6 +1530,7 @@ export namespace Prisma {
     thumbnailUrl?: true
     createdAt?: true
     updatedAt?: true
+    gameTableId?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1509,6 +1544,7 @@ export namespace Prisma {
     thumbnailUrl?: true
     createdAt?: true
     updatedAt?: true
+    gameTableId?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1522,6 +1558,7 @@ export namespace Prisma {
     thumbnailUrl?: true
     createdAt?: true
     updatedAt?: true
+    gameTableId?: true
     _all?: true
   }
 
@@ -1608,6 +1645,7 @@ export namespace Prisma {
     thumbnailUrl: string
     createdAt: Date
     updatedAt: Date
+    gameTableId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1638,8 +1676,10 @@ export namespace Prisma {
     thumbnailUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    gameTableId?: boolean
     decks?: boolean | User$decksArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1654,6 +1694,8 @@ export namespace Prisma {
     thumbnailUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    gameTableId?: boolean
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1667,6 +1709,8 @@ export namespace Prisma {
     thumbnailUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    gameTableId?: boolean
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1680,22 +1724,29 @@ export namespace Prisma {
     thumbnailUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    gameTableId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "firstName" | "lastName" | "email" | "password" | "pictureUrl" | "thumbnailUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "firstName" | "lastName" | "email" | "password" | "pictureUrl" | "thumbnailUrl" | "createdAt" | "updatedAt" | "gameTableId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     decks?: boolean | User$decksArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
+  }
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    GameTable?: boolean | User$GameTableArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
       decks: Prisma.$DeckPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      GameTable: Prisma.$GameTablePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1708,6 +1759,7 @@ export namespace Prisma {
       thumbnailUrl: string
       createdAt: Date
       updatedAt: Date
+      gameTableId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2104,6 +2156,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     decks<T extends User$decksArgs<ExtArgs> = {}>(args?: Subset<T, User$decksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    GameTable<T extends User$GameTableArgs<ExtArgs> = {}>(args?: Subset<T, User$GameTableArgs<ExtArgs>>): Prisma__GameTableClient<$Result.GetResult<Prisma.$GameTablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2143,6 +2196,7 @@ export namespace Prisma {
     readonly thumbnailUrl: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly gameTableId: FieldRef<"User", 'String'>
   }
     
 
@@ -2392,6 +2446,10 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2462,6 +2520,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2576,6 +2638,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.GameTable
+   */
+  export type User$GameTableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameTable
+     */
+    select?: GameTableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameTable
+     */
+    omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    where?: GameTableWhereInput
   }
 
   /**
@@ -7068,7 +7149,6 @@ export namespace Prisma {
     id: number
     name: number
     status: number
-    players: number
     createdAt: number
     _all: number
   }
@@ -7092,7 +7172,6 @@ export namespace Prisma {
     id?: true
     name?: true
     status?: true
-    players?: true
     createdAt?: true
     _all?: true
   }
@@ -7173,7 +7252,6 @@ export namespace Prisma {
     id: string
     name: string
     status: string
-    players: string[]
     createdAt: Date
     _count: GameTableCountAggregateOutputType | null
     _min: GameTableMinAggregateOutputType | null
@@ -7198,15 +7276,15 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
-    players?: boolean
     createdAt?: boolean
+    players?: boolean | GameTable$playersArgs<ExtArgs>
+    _count?: boolean | GameTableCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["gameTable"]>
 
   export type GameTableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     status?: boolean
-    players?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["gameTable"]>
 
@@ -7214,7 +7292,6 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
-    players?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["gameTable"]>
 
@@ -7222,20 +7299,26 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
-    players?: boolean
     createdAt?: boolean
   }
 
-  export type GameTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "players" | "createdAt", ExtArgs["result"]["gameTable"]>
+  export type GameTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "createdAt", ExtArgs["result"]["gameTable"]>
+  export type GameTableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    players?: boolean | GameTable$playersArgs<ExtArgs>
+    _count?: boolean | GameTableCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type GameTableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type GameTableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $GameTablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "GameTable"
-    objects: {}
+    objects: {
+      players: Prisma.$UserPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       status: string
-      players: string[]
       createdAt: Date
     }, ExtArgs["result"]["gameTable"]>
     composites: {}
@@ -7631,6 +7714,7 @@ export namespace Prisma {
    */
   export interface Prisma__GameTableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    players<T extends GameTable$playersArgs<ExtArgs> = {}>(args?: Subset<T, GameTable$playersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7663,7 +7747,6 @@ export namespace Prisma {
     readonly id: FieldRef<"GameTable", 'String'>
     readonly name: FieldRef<"GameTable", 'String'>
     readonly status: FieldRef<"GameTable", 'String'>
-    readonly players: FieldRef<"GameTable", 'String[]'>
     readonly createdAt: FieldRef<"GameTable", 'DateTime'>
   }
     
@@ -7681,6 +7764,10 @@ export namespace Prisma {
      * Omit specific fields from the GameTable
      */
     omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
     /**
      * Filter, which GameTable to fetch.
      */
@@ -7700,6 +7787,10 @@ export namespace Prisma {
      */
     omit?: GameTableOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    /**
      * Filter, which GameTable to fetch.
      */
     where: GameTableWhereUniqueInput
@@ -7717,6 +7808,10 @@ export namespace Prisma {
      * Omit specific fields from the GameTable
      */
     omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
     /**
      * Filter, which GameTable to fetch.
      */
@@ -7766,6 +7861,10 @@ export namespace Prisma {
      */
     omit?: GameTableOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    /**
      * Filter, which GameTable to fetch.
      */
     where?: GameTableWhereInput
@@ -7814,6 +7913,10 @@ export namespace Prisma {
      */
     omit?: GameTableOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    /**
      * Filter, which GameTables to fetch.
      */
     where?: GameTableWhereInput
@@ -7856,6 +7959,10 @@ export namespace Prisma {
      * Omit specific fields from the GameTable
      */
     omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
     /**
      * The data needed to create a GameTable.
      */
@@ -7904,6 +8011,10 @@ export namespace Prisma {
      * Omit specific fields from the GameTable
      */
     omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
     /**
      * The data needed to update a GameTable.
      */
@@ -7971,6 +8082,10 @@ export namespace Prisma {
      */
     omit?: GameTableOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    /**
      * The filter to search for the GameTable to update in case it exists.
      */
     where: GameTableWhereUniqueInput
@@ -7997,6 +8112,10 @@ export namespace Prisma {
      */
     omit?: GameTableOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
+    /**
      * Filter which GameTable to delete.
      */
     where: GameTableWhereUniqueInput
@@ -8017,6 +8136,30 @@ export namespace Prisma {
   }
 
   /**
+   * GameTable.players
+   */
+  export type GameTable$playersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
    * GameTable without action
    */
   export type GameTableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8028,6 +8171,10 @@ export namespace Prisma {
      * Omit specific fields from the GameTable
      */
     omit?: GameTableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameTableInclude<ExtArgs> | null
   }
 
 
@@ -8055,7 +8202,8 @@ export namespace Prisma {
     pictureUrl: 'pictureUrl',
     thumbnailUrl: 'thumbnailUrl',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    gameTableId: 'gameTableId'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -8116,7 +8264,6 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     status: 'status',
-    players: 'players',
     createdAt: 'createdAt'
   };
 
@@ -8232,8 +8379,10 @@ export namespace Prisma {
     thumbnailUrl?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    gameTableId?: StringNullableFilter<"User"> | string | null
     decks?: DeckListRelationFilter
     sessions?: SessionListRelationFilter
+    GameTable?: XOR<GameTableNullableScalarRelationFilter, GameTableWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8247,8 +8396,10 @@ export namespace Prisma {
     thumbnailUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    gameTableId?: SortOrderInput | SortOrder
     decks?: DeckOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
+    GameTable?: GameTableOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8265,8 +8416,10 @@ export namespace Prisma {
     thumbnailUrl?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    gameTableId?: StringNullableFilter<"User"> | string | null
     decks?: DeckListRelationFilter
     sessions?: SessionListRelationFilter
+    GameTable?: XOR<GameTableNullableScalarRelationFilter, GameTableWhereInput> | null
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8280,6 +8433,7 @@ export namespace Prisma {
     thumbnailUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    gameTableId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -8299,6 +8453,7 @@ export namespace Prisma {
     thumbnailUrl?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    gameTableId?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type SessionWhereInput = {
@@ -8578,16 +8733,16 @@ export namespace Prisma {
     id?: StringFilter<"GameTable"> | string
     name?: StringFilter<"GameTable"> | string
     status?: StringFilter<"GameTable"> | string
-    players?: StringNullableListFilter<"GameTable">
     createdAt?: DateTimeFilter<"GameTable"> | Date | string
+    players?: UserListRelationFilter
   }
 
   export type GameTableOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
-    players?: SortOrder
     createdAt?: SortOrder
+    players?: UserOrderByRelationAggregateInput
   }
 
   export type GameTableWhereUniqueInput = Prisma.AtLeast<{
@@ -8597,15 +8752,14 @@ export namespace Prisma {
     NOT?: GameTableWhereInput | GameTableWhereInput[]
     name?: StringFilter<"GameTable"> | string
     status?: StringFilter<"GameTable"> | string
-    players?: StringNullableListFilter<"GameTable">
     createdAt?: DateTimeFilter<"GameTable"> | Date | string
+    players?: UserListRelationFilter
   }, "id">
 
   export type GameTableOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
-    players?: SortOrder
     createdAt?: SortOrder
     _count?: GameTableCountOrderByAggregateInput
     _max?: GameTableMaxOrderByAggregateInput
@@ -8619,7 +8773,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"GameTable"> | string
     name?: StringWithAggregatesFilter<"GameTable"> | string
     status?: StringWithAggregatesFilter<"GameTable"> | string
-    players?: StringNullableListFilter<"GameTable">
     createdAt?: DateTimeWithAggregatesFilter<"GameTable"> | Date | string
   }
 
@@ -8636,6 +8789,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     decks?: DeckCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    GameTable?: GameTableCreateNestedOneWithoutPlayersInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8649,6 +8803,7 @@ export namespace Prisma {
     thumbnailUrl?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    gameTableId?: string | null
     decks?: DeckUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8666,6 +8821,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    GameTable?: GameTableUpdateOneWithoutPlayersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8679,6 +8835,7 @@ export namespace Prisma {
     thumbnailUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gameTableId?: NullableStringFieldUpdateOperationsInput | string | null
     decks?: DeckUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -8694,6 +8851,7 @@ export namespace Prisma {
     thumbnailUrl?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    gameTableId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -8720,6 +8878,7 @@ export namespace Prisma {
     thumbnailUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gameTableId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SessionCreateInput = {
@@ -9006,39 +9165,38 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
-    players?: GameTableCreateplayersInput | string[]
     createdAt?: Date | string
+    players?: UserCreateNestedManyWithoutGameTableInput
   }
 
   export type GameTableUncheckedCreateInput = {
     id?: string
     name: string
     status?: string
-    players?: GameTableCreateplayersInput | string[]
     createdAt?: Date | string
+    players?: UserUncheckedCreateNestedManyWithoutGameTableInput
   }
 
   export type GameTableUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    players?: GameTableUpdateplayersInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    players?: UserUpdateManyWithoutGameTableNestedInput
   }
 
   export type GameTableUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    players?: GameTableUpdateplayersInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    players?: UserUncheckedUpdateManyWithoutGameTableNestedInput
   }
 
   export type GameTableCreateManyInput = {
     id?: string
     name: string
     status?: string
-    players?: GameTableCreateplayersInput | string[]
     createdAt?: Date | string
   }
 
@@ -9046,7 +9204,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    players?: GameTableUpdateplayersInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9054,7 +9211,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    players?: GameTableUpdateplayersInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9084,6 +9240,21 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DeckListRelationFilter = {
     every?: DeckWhereInput
     some?: DeckWhereInput
@@ -9094,6 +9265,16 @@ export namespace Prisma {
     every?: SessionWhereInput
     some?: SessionWhereInput
     none?: SessionWhereInput
+  }
+
+  export type GameTableNullableScalarRelationFilter = {
+    is?: GameTableWhereInput | null
+    isNot?: GameTableWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type DeckOrderByRelationAggregateInput = {
@@ -9115,6 +9296,7 @@ export namespace Prisma {
     thumbnailUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    gameTableId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -9128,6 +9310,7 @@ export namespace Prisma {
     thumbnailUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    gameTableId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -9141,6 +9324,7 @@ export namespace Prisma {
     thumbnailUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    gameTableId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9175,6 +9359,24 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -9201,30 +9403,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type DeckCardListRelationFilter = {
     every?: DeckCardWhereInput
     some?: DeckCardWhereInput
     none?: DeckCardWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type DeckCardOrderByRelationAggregateInput = {
@@ -9279,24 +9461,6 @@ export namespace Prisma {
     artCropUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -9408,19 +9572,20 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type GameTableCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
-    players?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9450,6 +9615,12 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type GameTableCreateNestedOneWithoutPlayersInput = {
+    create?: XOR<GameTableCreateWithoutPlayersInput, GameTableUncheckedCreateWithoutPlayersInput>
+    connectOrCreate?: GameTableCreateOrConnectWithoutPlayersInput
+    connect?: GameTableWhereUniqueInput
   }
 
   export type DeckUncheckedCreateNestedManyWithoutUserInput = {
@@ -9500,6 +9671,20 @@ export namespace Prisma {
     update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type GameTableUpdateOneWithoutPlayersNestedInput = {
+    create?: XOR<GameTableCreateWithoutPlayersInput, GameTableUncheckedCreateWithoutPlayersInput>
+    connectOrCreate?: GameTableCreateOrConnectWithoutPlayersInput
+    upsert?: GameTableUpsertWithoutPlayersInput
+    disconnect?: GameTableWhereInput | boolean
+    delete?: GameTableWhereInput | boolean
+    connect?: GameTableWhereUniqueInput
+    update?: XOR<XOR<GameTableUpdateToOneWithWhereWithoutPlayersInput, GameTableUpdateWithoutPlayersInput>, GameTableUncheckedUpdateWithoutPlayersInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DeckUncheckedUpdateManyWithoutUserNestedInput = {
@@ -9570,10 +9755,6 @@ export namespace Prisma {
     connectOrCreate?: DeckCreateOrConnectWithoutCommanderInput | DeckCreateOrConnectWithoutCommanderInput[]
     createMany?: DeckCreateManyCommanderInputEnvelope
     connect?: DeckWhereUniqueInput | DeckWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type DeckCardUpdateManyWithoutCardNestedInput = {
@@ -9742,13 +9923,46 @@ export namespace Prisma {
     update?: XOR<XOR<CardUpdateToOneWithWhereWithoutDecksInput, CardUpdateWithoutDecksInput>, CardUncheckedUpdateWithoutDecksInput>
   }
 
-  export type GameTableCreateplayersInput = {
-    set: string[]
+  export type UserCreateNestedManyWithoutGameTableInput = {
+    create?: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput> | UserCreateWithoutGameTableInput[] | UserUncheckedCreateWithoutGameTableInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutGameTableInput | UserCreateOrConnectWithoutGameTableInput[]
+    createMany?: UserCreateManyGameTableInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
-  export type GameTableUpdateplayersInput = {
-    set?: string[]
-    push?: string | string[]
+  export type UserUncheckedCreateNestedManyWithoutGameTableInput = {
+    create?: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput> | UserCreateWithoutGameTableInput[] | UserUncheckedCreateWithoutGameTableInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutGameTableInput | UserCreateOrConnectWithoutGameTableInput[]
+    createMany?: UserCreateManyGameTableInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type UserUpdateManyWithoutGameTableNestedInput = {
+    create?: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput> | UserCreateWithoutGameTableInput[] | UserUncheckedCreateWithoutGameTableInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutGameTableInput | UserCreateOrConnectWithoutGameTableInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutGameTableInput | UserUpsertWithWhereUniqueWithoutGameTableInput[]
+    createMany?: UserCreateManyGameTableInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutGameTableInput | UserUpdateWithWhereUniqueWithoutGameTableInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutGameTableInput | UserUpdateManyWithWhereWithoutGameTableInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutGameTableNestedInput = {
+    create?: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput> | UserCreateWithoutGameTableInput[] | UserUncheckedCreateWithoutGameTableInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutGameTableInput | UserCreateOrConnectWithoutGameTableInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutGameTableInput | UserUpsertWithWhereUniqueWithoutGameTableInput[]
+    createMany?: UserCreateManyGameTableInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutGameTableInput | UserUpdateWithWhereUniqueWithoutGameTableInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutGameTableInput | UserUpdateManyWithWhereWithoutGameTableInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9774,6 +9988,20 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9816,20 +10044,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -9952,6 +10166,25 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GameTableCreateWithoutPlayersInput = {
+    id?: string
+    name: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type GameTableUncheckedCreateWithoutPlayersInput = {
+    id?: string
+    name: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type GameTableCreateOrConnectWithoutPlayersInput = {
+    where: GameTableWhereUniqueInput
+    create: XOR<GameTableCreateWithoutPlayersInput, GameTableUncheckedCreateWithoutPlayersInput>
+  }
+
   export type DeckUpsertWithWhereUniqueWithoutUserInput = {
     where: DeckWhereUniqueInput
     update: XOR<DeckUpdateWithoutUserInput, DeckUncheckedUpdateWithoutUserInput>
@@ -10007,6 +10240,31 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type GameTableUpsertWithoutPlayersInput = {
+    update: XOR<GameTableUpdateWithoutPlayersInput, GameTableUncheckedUpdateWithoutPlayersInput>
+    create: XOR<GameTableCreateWithoutPlayersInput, GameTableUncheckedCreateWithoutPlayersInput>
+    where?: GameTableWhereInput
+  }
+
+  export type GameTableUpdateToOneWithWhereWithoutPlayersInput = {
+    where?: GameTableWhereInput
+    data: XOR<GameTableUpdateWithoutPlayersInput, GameTableUncheckedUpdateWithoutPlayersInput>
+  }
+
+  export type GameTableUpdateWithoutPlayersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameTableUncheckedUpdateWithoutPlayersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id?: string
     username: string
@@ -10019,6 +10277,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     decks?: DeckCreateNestedManyWithoutUserInput
+    GameTable?: GameTableCreateNestedOneWithoutPlayersInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -10032,6 +10291,7 @@ export namespace Prisma {
     thumbnailUrl?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    gameTableId?: string | null
     decks?: DeckUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10063,6 +10323,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     decks?: DeckUpdateManyWithoutUserNestedInput
+    GameTable?: GameTableUpdateOneWithoutPlayersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -10076,6 +10337,7 @@ export namespace Prisma {
     thumbnailUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gameTableId?: NullableStringFieldUpdateOperationsInput | string | null
     decks?: DeckUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -10185,6 +10447,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    GameTable?: GameTableCreateNestedOneWithoutPlayersInput
   }
 
   export type UserUncheckedCreateWithoutDecksInput = {
@@ -10198,6 +10461,7 @@ export namespace Prisma {
     thumbnailUrl?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    gameTableId?: string | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10288,6 +10552,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    GameTable?: GameTableUpdateOneWithoutPlayersNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDecksInput = {
@@ -10301,6 +10566,7 @@ export namespace Prisma {
     thumbnailUrl?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gameTableId?: NullableStringFieldUpdateOperationsInput | string | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -10499,6 +10765,79 @@ export namespace Prisma {
     commanderOf?: DeckUncheckedUpdateManyWithoutCommanderNestedInput
   }
 
+  export type UserCreateWithoutGameTableInput = {
+    id?: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    pictureUrl?: string
+    thumbnailUrl?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    decks?: DeckCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGameTableInput = {
+    id?: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    pictureUrl?: string
+    thumbnailUrl?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    decks?: DeckUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGameTableInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput>
+  }
+
+  export type UserCreateManyGameTableInputEnvelope = {
+    data: UserCreateManyGameTableInput | UserCreateManyGameTableInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutGameTableInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutGameTableInput, UserUncheckedUpdateWithoutGameTableInput>
+    create: XOR<UserCreateWithoutGameTableInput, UserUncheckedCreateWithoutGameTableInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutGameTableInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutGameTableInput, UserUncheckedUpdateWithoutGameTableInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutGameTableInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutGameTableInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
+    firstName?: StringFilter<"User"> | string
+    lastName?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    pictureUrl?: StringFilter<"User"> | string
+    thumbnailUrl?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    gameTableId?: StringNullableFilter<"User"> | string | null
+  }
+
   export type DeckCreateManyUserInput = {
     id?: string
     name: string
@@ -10645,6 +10984,62 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     cardId?: StringFieldUpdateOperationsInput | string
     count?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserCreateManyGameTableInput = {
+    id?: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    pictureUrl?: string
+    thumbnailUrl?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUpdateWithoutGameTableInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pictureUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    decks?: DeckUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGameTableInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pictureUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    decks?: DeckUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutGameTableInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    pictureUrl?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
