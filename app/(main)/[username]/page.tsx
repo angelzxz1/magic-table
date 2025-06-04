@@ -4,13 +4,30 @@ import { UserUpdate } from "@/components/ui/user-edit/update-data";
 import { UserAvatar } from "@/components/ui/user-edit/user-avatar";
 import { UserWithoutPassword } from "@/store/features/user/userSlice";
 import { useAppSelector } from "@/store/hooks";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 export default function Page() {
-    const user: UserWithoutPassword | null = useAppSelector(
-        (state) => state.user.user
+    const params = useParams();
+    const router = useRouter();
+    const [user, setUser] = useState<UserWithoutPassword | null>(
+        useAppSelector((state) => state.user.user)
     );
+
+    useEffect(() => {
+        const checkUser = () => {
+            if (!user) {
+                router.push("/login");
+            }
+            if (user && user.username !== params.username) {
+                router.push(`/${user.username}`);
+            }
+        };
+        checkUser();
+    }, [user, params.username, router]);
     if (!user) {
         return <></>;
     }
+
     // const { firstName, lastName, thumbnailUrl, username, email } = user;
     return (
         <div className="w-full h-full flex flex-col items-start ">

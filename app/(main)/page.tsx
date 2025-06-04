@@ -7,6 +7,7 @@ import { Plus, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { useAppSelector } from "@/store/hooks";
 import { cn } from "@/lib/utils";
+import { CreateTableModal } from "@/components/ui/create-table/create-table-modal";
 
 const StatusText = ({ status }: { status: string }) => {
     return (
@@ -32,10 +33,11 @@ interface TableCompType extends GameTable {
     players: User[];
 }
 const TableComponent = ({ table }: { table: TableCompType }) => {
-    const { name, players, status } = table;
+    const { name, players, status, creator } = table;
     return (
         <div className="border p-4 mb-4 rounded-md bg-neutral-700 text-white w-72 h-72">
             <h2 className="text-xl font-bold">{name}</h2>
+            <h2>Host: {creator}</h2>
             {players.map((player) => {
                 return (
                     <div key={player.id} className="flex items-center gap-2">
@@ -60,45 +62,6 @@ const TableList = ({ tables }: { tables: TableCompType[] }) => {
     );
 };
 
-const CreateTableButton = ({ getTables }: { getTables: () => void }) => {
-    const { user } = useAppSelector((state) => state.user);
-    const handleCreateTable = async () => {
-        try {
-            const response = await fetch("/api/tables", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name: "New Game Table",
-                    creatorId: user?.id,
-                }),
-            });
-            if (!response.ok) {
-                throw new Error("Error creating table");
-            }
-            const data = await response.json();
-            console.log("Table created:", data);
-            getTables(); // Refresh the list of tables after creation
-            toast.success("Table created successfully!");
-        } catch (error) {
-            console.error("Failed to create table:", error);
-            toast.error("Failed to create table. Please try again.");
-        }
-    };
-
-    return (
-        <Button
-            onClick={handleCreateTable}
-            className="cursor-pointer"
-            variant="outline"
-        >
-            New Table
-            <Plus />
-        </Button>
-    );
-};
-
 const MainPage = () => {
     const [gameTables, setGameTables] = useState<TableCompType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -111,7 +74,6 @@ const MainPage = () => {
                 setLoading(false);
             })
             .catch((error) => {
-                console.error("Failed to refresh tables:", error);
                 setLoading(false);
             });
     };
@@ -122,7 +84,8 @@ const MainPage = () => {
         <div className="w-full h-full flex ">
             <div className="w-full flex-1 pt-8 gap-8 flex flex-col">
                 <div className="w-full flex gap-4 items-center px-4">
-                    <CreateTableButton getTables={getTables} />
+                    {/* <CreateTableButton getTables={getTables} /> */}
+                    <CreateTableModal getTables={getTables} />
                     <Button
                         disabled={loading}
                         className="cursor-pointer"

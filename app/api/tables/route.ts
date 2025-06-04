@@ -14,24 +14,47 @@ export async function GET() {
     return NextResponse.json(tables);
 }
 
+export type TableInfoType = {
+    name: string;
+    maxPlayers: number;
+    userId: string;
+    creator: string;
+};
 // POST: crear una nueva mesa
 export async function POST(request: Request) {
-    const body = await request.json();
-    const { name, creatorId } = body;
+    const body = (await request.json()) as TableInfoType;
+    const { name, maxPlayers, userId, creator } = body;
+
     // Verifica que se haya proporcionado un nombre y un creador
-    if (!name || !creatorId) {
+    if (!name) {
         return NextResponse.json(
-            { error: "Name and creator username are required" },
+            { error: "Name and creator username is required" },
             { status: 400 }
         );
     }
+    if (!userId) {
+        console.log(userId);
+        return NextResponse.json(
+            { error: "Creator username is required" },
+            { status: 400 }
+        );
+    }
+    if (!maxPlayers) {
+        return NextResponse.json(
+            { error: "Max players is required" },
+            { status: 400 }
+        );
+    }
+
     // Crea una nueva mesa en la base de datos y la asigna al creador
     const table = await db.gameTable.create({
         data: {
             name,
+            maxPlayers,
+            creator,
             players: {
                 connect: {
-                    id: creatorId, // Asegúrate de que el creador exista en la base de datos
+                    id: userId, // Asegúrate de que el creador exista en la base de datos
                 },
             },
         },

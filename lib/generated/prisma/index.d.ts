@@ -7127,14 +7127,26 @@ export namespace Prisma {
 
   export type AggregateGameTable = {
     _count: GameTableCountAggregateOutputType | null
+    _avg: GameTableAvgAggregateOutputType | null
+    _sum: GameTableSumAggregateOutputType | null
     _min: GameTableMinAggregateOutputType | null
     _max: GameTableMaxAggregateOutputType | null
+  }
+
+  export type GameTableAvgAggregateOutputType = {
+    maxPlayers: number | null
+  }
+
+  export type GameTableSumAggregateOutputType = {
+    maxPlayers: number | null
   }
 
   export type GameTableMinAggregateOutputType = {
     id: string | null
     name: string | null
     status: string | null
+    creator: string | null
+    maxPlayers: number | null
     createdAt: Date | null
   }
 
@@ -7142,6 +7154,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     status: string | null
+    creator: string | null
+    maxPlayers: number | null
     createdAt: Date | null
   }
 
@@ -7149,15 +7163,27 @@ export namespace Prisma {
     id: number
     name: number
     status: number
+    creator: number
+    maxPlayers: number
     createdAt: number
     _all: number
   }
 
 
+  export type GameTableAvgAggregateInputType = {
+    maxPlayers?: true
+  }
+
+  export type GameTableSumAggregateInputType = {
+    maxPlayers?: true
+  }
+
   export type GameTableMinAggregateInputType = {
     id?: true
     name?: true
     status?: true
+    creator?: true
+    maxPlayers?: true
     createdAt?: true
   }
 
@@ -7165,6 +7191,8 @@ export namespace Prisma {
     id?: true
     name?: true
     status?: true
+    creator?: true
+    maxPlayers?: true
     createdAt?: true
   }
 
@@ -7172,6 +7200,8 @@ export namespace Prisma {
     id?: true
     name?: true
     status?: true
+    creator?: true
+    maxPlayers?: true
     createdAt?: true
     _all?: true
   }
@@ -7214,6 +7244,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: GameTableAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GameTableSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: GameTableMinAggregateInputType
@@ -7244,6 +7286,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: GameTableCountAggregateInputType | true
+    _avg?: GameTableAvgAggregateInputType
+    _sum?: GameTableSumAggregateInputType
     _min?: GameTableMinAggregateInputType
     _max?: GameTableMaxAggregateInputType
   }
@@ -7252,8 +7296,12 @@ export namespace Prisma {
     id: string
     name: string
     status: string
+    creator: string
+    maxPlayers: number
     createdAt: Date
     _count: GameTableCountAggregateOutputType | null
+    _avg: GameTableAvgAggregateOutputType | null
+    _sum: GameTableSumAggregateOutputType | null
     _min: GameTableMinAggregateOutputType | null
     _max: GameTableMaxAggregateOutputType | null
   }
@@ -7276,6 +7324,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    creator?: boolean
+    maxPlayers?: boolean
     createdAt?: boolean
     players?: boolean | GameTable$playersArgs<ExtArgs>
     _count?: boolean | GameTableCountOutputTypeDefaultArgs<ExtArgs>
@@ -7285,6 +7335,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    creator?: boolean
+    maxPlayers?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["gameTable"]>
 
@@ -7292,6 +7344,8 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    creator?: boolean
+    maxPlayers?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["gameTable"]>
 
@@ -7299,10 +7353,12 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     status?: boolean
+    creator?: boolean
+    maxPlayers?: boolean
     createdAt?: boolean
   }
 
-  export type GameTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "createdAt", ExtArgs["result"]["gameTable"]>
+  export type GameTableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "status" | "creator" | "maxPlayers" | "createdAt", ExtArgs["result"]["gameTable"]>
   export type GameTableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     players?: boolean | GameTable$playersArgs<ExtArgs>
     _count?: boolean | GameTableCountOutputTypeDefaultArgs<ExtArgs>
@@ -7319,6 +7375,8 @@ export namespace Prisma {
       id: string
       name: string
       status: string
+      creator: string
+      maxPlayers: number
       createdAt: Date
     }, ExtArgs["result"]["gameTable"]>
     composites: {}
@@ -7747,6 +7805,8 @@ export namespace Prisma {
     readonly id: FieldRef<"GameTable", 'String'>
     readonly name: FieldRef<"GameTable", 'String'>
     readonly status: FieldRef<"GameTable", 'String'>
+    readonly creator: FieldRef<"GameTable", 'String'>
+    readonly maxPlayers: FieldRef<"GameTable", 'Int'>
     readonly createdAt: FieldRef<"GameTable", 'DateTime'>
   }
     
@@ -8264,6 +8324,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     status: 'status',
+    creator: 'creator',
+    maxPlayers: 'maxPlayers',
     createdAt: 'createdAt'
   };
 
@@ -8733,6 +8795,8 @@ export namespace Prisma {
     id?: StringFilter<"GameTable"> | string
     name?: StringFilter<"GameTable"> | string
     status?: StringFilter<"GameTable"> | string
+    creator?: StringFilter<"GameTable"> | string
+    maxPlayers?: IntFilter<"GameTable"> | number
     createdAt?: DateTimeFilter<"GameTable"> | Date | string
     players?: UserListRelationFilter
   }
@@ -8741,6 +8805,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    creator?: SortOrder
+    maxPlayers?: SortOrder
     createdAt?: SortOrder
     players?: UserOrderByRelationAggregateInput
   }
@@ -8752,6 +8818,8 @@ export namespace Prisma {
     NOT?: GameTableWhereInput | GameTableWhereInput[]
     name?: StringFilter<"GameTable"> | string
     status?: StringFilter<"GameTable"> | string
+    creator?: StringFilter<"GameTable"> | string
+    maxPlayers?: IntFilter<"GameTable"> | number
     createdAt?: DateTimeFilter<"GameTable"> | Date | string
     players?: UserListRelationFilter
   }, "id">
@@ -8760,10 +8828,14 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    creator?: SortOrder
+    maxPlayers?: SortOrder
     createdAt?: SortOrder
     _count?: GameTableCountOrderByAggregateInput
+    _avg?: GameTableAvgOrderByAggregateInput
     _max?: GameTableMaxOrderByAggregateInput
     _min?: GameTableMinOrderByAggregateInput
+    _sum?: GameTableSumOrderByAggregateInput
   }
 
   export type GameTableScalarWhereWithAggregatesInput = {
@@ -8773,6 +8845,8 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"GameTable"> | string
     name?: StringWithAggregatesFilter<"GameTable"> | string
     status?: StringWithAggregatesFilter<"GameTable"> | string
+    creator?: StringWithAggregatesFilter<"GameTable"> | string
+    maxPlayers?: IntWithAggregatesFilter<"GameTable"> | number
     createdAt?: DateTimeWithAggregatesFilter<"GameTable"> | Date | string
   }
 
@@ -9165,6 +9239,8 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
+    creator: string
+    maxPlayers: number
     createdAt?: Date | string
     players?: UserCreateNestedManyWithoutGameTableInput
   }
@@ -9173,6 +9249,8 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
+    creator: string
+    maxPlayers: number
     createdAt?: Date | string
     players?: UserUncheckedCreateNestedManyWithoutGameTableInput
   }
@@ -9181,6 +9259,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: UserUpdateManyWithoutGameTableNestedInput
   }
@@ -9189,6 +9269,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: UserUncheckedUpdateManyWithoutGameTableNestedInput
   }
@@ -9197,6 +9279,8 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
+    creator: string
+    maxPlayers: number
     createdAt?: Date | string
   }
 
@@ -9204,6 +9288,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9211,6 +9297,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -9586,13 +9674,21 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    creator?: SortOrder
+    maxPlayers?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type GameTableAvgOrderByAggregateInput = {
+    maxPlayers?: SortOrder
   }
 
   export type GameTableMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    creator?: SortOrder
+    maxPlayers?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -9600,7 +9696,13 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     status?: SortOrder
+    creator?: SortOrder
+    maxPlayers?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type GameTableSumOrderByAggregateInput = {
+    maxPlayers?: SortOrder
   }
 
   export type DeckCreateNestedManyWithoutUserInput = {
@@ -10170,6 +10272,8 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
+    creator: string
+    maxPlayers: number
     createdAt?: Date | string
   }
 
@@ -10177,6 +10281,8 @@ export namespace Prisma {
     id?: string
     name: string
     status?: string
+    creator: string
+    maxPlayers: number
     createdAt?: Date | string
   }
 
@@ -10255,6 +10361,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -10262,6 +10370,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    creator?: StringFieldUpdateOperationsInput | string
+    maxPlayers?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
