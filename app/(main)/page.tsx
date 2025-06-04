@@ -3,9 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { GameTable, User } from "@/lib/generated/prisma";
 import { useEffect, useState } from "react";
-import { Plus, RefreshCw } from "lucide-react";
-import { toast } from "sonner";
-import { useAppSelector } from "@/store/hooks";
+import { RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CreateTableModal } from "@/components/ui/create-table/create-table-modal";
 
@@ -74,6 +72,7 @@ const MainPage = () => {
                 setLoading(false);
             })
             .catch((error) => {
+                console.log(error);
                 setLoading(false);
             });
     };

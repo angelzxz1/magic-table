@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function Page() {
     const params = useParams();
     const router = useRouter();
-    const [user, setUser] = useState<UserWithoutPassword | null>(
+    const [user] = useState<UserWithoutPassword | null>(
         useAppSelector((state) => state.user.user)
     );
 

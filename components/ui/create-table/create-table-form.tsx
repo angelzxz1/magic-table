@@ -12,9 +12,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { Import, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { UserWithoutPassword } from "@/store/features/user/userSlice";
 import { toast } from "sonner";
