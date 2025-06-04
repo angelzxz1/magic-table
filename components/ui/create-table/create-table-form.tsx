@@ -17,7 +17,7 @@ import { Loader } from "lucide-react";
 import { useAppSelector } from "@/store/hooks";
 import { UserWithoutPassword } from "@/store/features/user/userSlice";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const formSchema = z.object({
     name: z.string().min(5),
@@ -27,7 +27,7 @@ const formSchema = z.object({
 });
 
 export function CreateTableForm({ getTables }: { getTables: () => void }) {
-    const router = useRouter();
+    // const router = useRouter();
     const user = useAppSelector(
         (state) => state.user.user
     ) as UserWithoutPassword;
